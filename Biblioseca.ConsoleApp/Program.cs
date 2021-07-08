@@ -20,13 +20,28 @@ namespace Biblioseca.ConsoleApp
 
             ISession session = sessionFactory.OpenSession();
 
-            Author author = new Author();
-            author.FirstName = "Steve";
-            author.LastName = "Rogers";
+            //Author author = new Author();
+           // author.FirstName = "William";
+           // author.LastName = "Shakespeare";
 
-            session.Save(author);
-            Console.WriteLine(author.FirstName);
-            Console.ReadKey();
+            Book book = new Book();
+            book.Title = "El amor en tiempos del cólera";
+            book.AuthorId = 2;
+
+            session.Save(book);
+            //session.Save(author);
+
+            Member member = new Member();
+            member.FirstName = "Luan";
+            member.LastName = "Mollo";
+            member.UserName = "luanmollo";
+
+            session.Save(member);
+            
+
+
+
+          
         }
     }
 }
