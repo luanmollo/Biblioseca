@@ -19,24 +19,19 @@ namespace Biblioseca.ConsoleApp
                 .BuildSessionFactory();
 
             ISession session = sessionFactory.OpenSession();
-
+            
             //Author author = new Author();
            // author.FirstName = "William";
            // author.LastName = "Shakespeare";
 
             Book book = new Book();
-            book.Title = "El amor en tiempos del cólera";
-            book.AuthorId = 2;
+            book.Title = "Padre Rico Padre Pobre";
+            book.AuthorId = 1;
 
             session.Save(book);
             //session.Save(author);
 
-            Member member = new Member();
-            member.FirstName = "Luan";
-            member.LastName = "Mollo";
-            member.UserName = "luanmollo";
-
-            session.Save(member);
+            
             
 
 
