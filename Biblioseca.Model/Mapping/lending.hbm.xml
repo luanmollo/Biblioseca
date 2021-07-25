@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+  assembly="Biblioseca.Model"
+  namespace="Biblioseca.Model">
+	<class name="Lending" table="Lendings">
+		<id name="Id">
+			<generator class="identity" />
+		</id>
+		<property name="BookId">
+			<column name="BookId" length="200" not-null="true" />
+		</property>
+		<property name="MemberId">
+			<column name="MemberId" length="200" not-null="true" />
+		</property>
+		<property name="LendDate">
+			<column name="LendDate" length="200" not-null="true" />
+		</property>
+		<property name="ReturnDate">
+			<column name="ReturnDate" length="200" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

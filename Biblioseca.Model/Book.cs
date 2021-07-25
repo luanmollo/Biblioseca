@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Biblioseca.Model
 {
-    public class Book
+    public class Book : Entity
     {
-        public virtual int Id { get; set; }
         public virtual string Title { get; set; }
         public virtual int AuthorId { get; set; }
         public virtual string Description { get; set; }
-        public virtual string Category { get; set; }
+        public virtual int CategoryId { get; set; }
         public virtual int ISBN { get; set; }
+        public virtual double Price { get; set; }
 
     }
 }

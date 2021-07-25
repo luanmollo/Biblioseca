@@ -61,6 +61,9 @@
   <ItemGroup>
     <Compile Include="Author.cs" />
     <Compile Include="Book.cs" />
+    <Compile Include="Category.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="Lending.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -73,6 +76,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Mapping\book.hbm.xml" />
     <EmbeddedResource Include="Mapping\member.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapping\category.hbm.xml" />
+    <EmbeddedResource Include="Mapping\lending.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

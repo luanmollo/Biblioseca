@@ -10,16 +10,19 @@
 			<column name="Title" length="200" not-null="true" />
 		</property>
 		<property name="AuthorId">
-			<column name="AuthorId" length="200" not-null="false" />
+			<column name="AuthorId" length="200" not-null="true" />
 		</property>
 		<property name="Description">
 			<column name="Description" length="200" not-null="false" />
 		</property>
-		<property name="Category">
-			<column name="Category" length="200" not-null="false" />
+		<property name="CategoryId">
+			<column name="CategoryId" length="200" not-null="true" />
 		</property>
 		<property name="ISBN">
 			<column name="ISBN" length="200" not-null="false" />
+		</property>
+		<property name="Price">
+			<column name="Price" length="200" not-null="true" />
 		</property>
 	</class>
 </hibernate-mapping>

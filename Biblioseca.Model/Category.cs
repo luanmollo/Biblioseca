@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Biblioseca.Model
 {
-    public class Author : Entity
+    public class Category : Entity
     {
-        public virtual string FirstName { get; set; }
-        public virtual string LastName { get; set; }
-
+        public virtual string Name { get; set; }
     }
 }

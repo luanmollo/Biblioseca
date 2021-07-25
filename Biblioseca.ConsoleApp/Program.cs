@@ -9,9 +9,9 @@ using NHibernate.Cfg;
 
 namespace Biblioseca.ConsoleApp
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
 
             ISessionFactory sessionFactory = new Configuration()
@@ -19,24 +19,21 @@ namespace Biblioseca.ConsoleApp
                 .BuildSessionFactory();
 
             ISession session = sessionFactory.OpenSession();
-            
-            //Author author = new Author();
-           // author.FirstName = "William";
-           // author.LastName = "Shakespeare";
 
-            Book book = new Book();
-            book.Title = "Padre Rico Padre Pobre";
-            book.AuthorId = 1;
+
+            Book book = new Book()
+            {
+                Title = "El amor en tiempos del cólera",
+                AuthorId = 1,
+                Description = "Un libro histórico",
+                CategoryId = 1,
+                ISBN = 1234,
+                Price = 123.4
+            };
 
             session.Save(book);
-            //session.Save(author);
-
-            
-            
 
 
-
-          
         }
     }
 }
