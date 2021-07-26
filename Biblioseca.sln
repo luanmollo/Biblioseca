@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biblioseca.ConsoleApp", "Bi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biblioseca.Model", "Biblioseca.Model\Biblioseca.Model.csproj", "{06E2EF92-51C2-46C4-9C55-2CCD871792F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biblioseca.Test", "Biblioseca.Test\Biblioseca.Test.csproj", "{7AD4A264-0914-49C2-BCDD-338E9A0856ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{06E2EF92-51C2-46C4-9C55-2CCD871792F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06E2EF92-51C2-46C4-9C55-2CCD871792F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06E2EF92-51C2-46C4-9C55-2CCD871792F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AD4A264-0914-49C2-BCDD-338E9A0856ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AD4A264-0914-49C2-BCDD-338E9A0856ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AD4A264-0914-49C2-BCDD-338E9A0856ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AD4A264-0914-49C2-BCDD-338E9A0856ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
