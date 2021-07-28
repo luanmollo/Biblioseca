@@ -19,19 +19,15 @@ namespace Biblioseca.ConsoleApp
                 .BuildSessionFactory();
 
             ISession session = sessionFactory.OpenSession();
+            session.Close();
 
+            List<int> values1 = new List<int>();
+            values1.Add(1);
 
-            Book book = new Book()
-            {
-                Title = "El amor en tiempos del cólera",
-                AuthorId = 1,
-                Description = "Un libro histórico",
-                CategoryId = 1,
-                ISBN = 1234,
-                Price = 123.4
-            };
+            List<string> values2 = new List<string>();
+            values2.Add("hello world!");
 
-            session.Save(book);
+            Console.ReadKey();
 
 
         }

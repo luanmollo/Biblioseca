@@ -9,20 +9,20 @@
 		<property name="Title">
 			<column name="Title" length="200" not-null="true" />
 		</property>
-		<property name="AuthorId">
-			<column name="AuthorId" length="200" not-null="true" />
-		</property>
 		<property name="Description">
-			<column name="Description" length="200" not-null="false" />
-		</property>
-		<property name="CategoryId">
-			<column name="CategoryId" length="200" not-null="true" />
+			<column name="Description" length="200" not-null="true" />
 		</property>
 		<property name="ISBN">
 			<column name="ISBN" length="200" not-null="false" />
 		</property>
 		<property name="Price">
-			<column name="Price" length="200" not-null="true" />
+			<column name="Price" length="200" not-null="false" />
 		</property>
+		<many-to-one name="Author" class="Author">
+			<column name="AuthorId" sql-type="int" not-null="true"/>
+		</many-to-one>
+		<many-to-one name="Category" class="Category">
+			<column name="CategoryId" sql-type="int" not-null="false"/>
+		</many-to-one>
 	</class>
 </hibernate-mapping>

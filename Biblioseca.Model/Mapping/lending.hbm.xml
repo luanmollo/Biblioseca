@@ -6,17 +6,17 @@
 		<id name="Id">
 			<generator class="identity" />
 		</id>
-		<property name="BookId">
-			<column name="BookId" length="200" not-null="true" />
-		</property>
-		<property name="MemberId">
-			<column name="MemberId" length="200" not-null="true" />
-		</property>
+		<many-to-one name="Book" class="Book">
+			<column name="BookId" sql-type="int" not-null="true"/>
+		</many-to-one>
+		<many-to-one name="Member" class="Member">
+			<column name="MemberId" sql-type="int" not-null="true" />
+		</many-to-one>
 		<property name="LendDate">
-			<column name="LendDate" length="200" not-null="true" />
+			<column name="LendDate" sql-type="Datetime" not-null="true" />
 		</property>
 		<property name="ReturnDate">
-			<column name="ReturnDate" length="200" not-null="true" />
+			<column name="ReturnDate" sql-type="Datetime" not-null="false"/>
 		</property>
 	</class>
 </hibernate-mapping>

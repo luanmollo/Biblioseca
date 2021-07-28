@@ -11,7 +11,7 @@ using NHibernate.Cfg;
 namespace Biblioseca.Test.Models
 {
     [TestClass]
-    public class AuthorTest
+    public class LendingTest
     {
         private ISessionFactory sessionFactory;
         private ISession session;
@@ -33,27 +33,7 @@ namespace Biblioseca.Test.Models
         }
 
         [TestMethod]
-        public void CreateAuthor()
-        {
-            Author author = new Author
-            {
-                FirstName = "Wanda",
-                LastName = "Maximoff"
-            };
-
-            this.session.Save(author);
-            this.session.Flush();
-            this.session.Clear();
-
-            Assert.IsTrue(author.Id > 0);
-
-            Author created = this.session.Get<Author>(author.Id);
-
-            Assert.AreEqual(author.Id, created.Id);
-        }
-
-        [TestMethod]
-        public void GetLendings()
+        public void CreateLending()
         {
             Author author = new Author
             {
@@ -74,7 +54,7 @@ namespace Biblioseca.Test.Models
             this.session.Flush();
             this.session.Clear();
 
-            Book book1 = new Book
+            Book book = new Book
             {
                 Author = author,
                 Category = category,
@@ -84,21 +64,7 @@ namespace Biblioseca.Test.Models
                 ISBN = "123-456-7890"
             };
 
-            this.session.Save(book1);
-            this.session.Flush();
-            this.session.Clear();
-
-            Book book2 = new Book
-            {
-                Author = author,
-                Category = category,
-                Description = "A description",
-                Price = 1000.0,
-                Title = "A title",
-                ISBN = "123-456-7890"
-            };
-
-            this.session.Save(book2);
+            this.session.Save(book);
             this.session.Flush();
             this.session.Clear();
 
@@ -113,34 +79,21 @@ namespace Biblioseca.Test.Models
             this.session.Flush();
             this.session.Clear();
 
-            Lending lending1 = new Lending
+            Lending lending = new Lending
             {
-                Book = book1,
+                Book = book,
                 Member = member,
                 LendDate = DateTime.Now,
                 ReturnDate = DateTime.Now.AddDays(2)
             };
 
-            Lending lending2 = new Lending
-            {
-                Book = book2,
-                Member = member,
-                LendDate = DateTime.Now,
-                ReturnDate = DateTime.Now.AddDays(2)
-            };
+            this.session.Save(lending);
 
-            member.Lendings.Add(lending1);
-            member.Lendings.Add(lending2);
+            Assert.IsTrue(author.Id > 0);
 
-            this.session.SaveOrUpdate(member);
-            this.session.Flush();
-            this.session.Clear();
+            Lending created = this.session.Get<Lending>(lending.Id);
 
-            Member createdMember = this.session.Get<Member>(member.Id);
-
-            Assert.IsNotNull(createdMember);
-            Assert.IsNotNull(createdMember.Lendings);
-            Assert.AreEqual(2, createdMember.Lendings.Count);
+            Assert.AreEqual(lending.Id, created.Id);
         }
         }
 }
