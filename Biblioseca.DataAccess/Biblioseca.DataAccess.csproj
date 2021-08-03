@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C3D26949-C445-4201-8358-4A49C03CB08C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Biblioseca.ConsoleApp</RootNamespace>
-    <AssemblyName>Biblioseca.ConsoleApp</AssemblyName>
+    <ProjectGuid>{E145A430-1A19-4428-A648-97D0FEC4513D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Biblioseca.DataAccess</RootNamespace>
+    <AssemblyName>Biblioseca.DataAccess</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -61,22 +59,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Authors\AuthorDao.cs" />
+    <Compile Include="Authors\IAuthorDao.cs" />
+    <Compile Include="Books\BookDao.cs" />
+    <Compile Include="Books\Filters\BookFilterDto.cs" />
+    <Compile Include="Books\IBookDao.cs" />
+    <Compile Include="Dao.cs" />
+    <Compile Include="IDao.cs" />
+    <Compile Include="Lendings\ILendingDao.cs" />
+    <Compile Include="Lendings\LendingDao.cs" />
+    <Compile Include="Members\IMemberDao.cs" />
+    <Compile Include="Members\MemberDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Biblioseca.DataAccess\Biblioseca.DataAccess.csproj">
-      <Project>{E145A430-1A19-4428-A648-97D0FEC4513D}</Project>
-      <Name>Biblioseca.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Biblioseca.Model\Biblioseca.Model.csproj">
       <Project>{06e2ef92-51c2-46c4-9c55-2ccd871792f7}</Project>
       <Name>Biblioseca.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

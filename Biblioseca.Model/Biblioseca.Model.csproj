@@ -63,6 +63,8 @@
     <Compile Include="Book.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Exceptions\BusinessRuleException.cs" />
+    <Compile Include="Exceptions\Ensure.cs" />
     <Compile Include="Lending.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

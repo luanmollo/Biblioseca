@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Biblioseca.DataAccess.Authors;
 using Biblioseca.Model;
 using NHibernate;
 using NHibernate.Cfg;
+using NHibernate.Context;
 
 namespace Biblioseca.ConsoleApp
 {
-    public class Program
+    public static class Program
     {
         private static void Main(string[] args)
         {
@@ -19,15 +21,16 @@ namespace Biblioseca.ConsoleApp
                 .BuildSessionFactory();
 
             ISession session = sessionFactory.OpenSession();
-            session.Close();
+            CurrentSessionContext.Bind(session);
 
-            List<int> values1 = new List<int>();
-            values1.Add(1);
+            AuthorDao authorDao = new AuthorDao(sessionFactory);
 
-            List<string> values2 = new List<string>();
-            values2.Add("hello world!");
+            IEnumerable<Author> authors = authorDao.GetAll();
 
-            Console.ReadKey();
+            foreach (Author author in authors)
+            {
+                Console.WriteLine($"Author: {author.FirstName}, {author.LastName}");
+            }
 
 
         }
