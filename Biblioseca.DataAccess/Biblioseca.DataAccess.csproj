@@ -60,14 +60,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authors\AuthorDao.cs" />
+    <Compile Include="Authors\Filters\AuthorFilterDto.cs" />
     <Compile Include="Authors\IAuthorDao.cs" />
     <Compile Include="Books\BookDao.cs" />
     <Compile Include="Books\Filters\BookFilterDto.cs" />
     <Compile Include="Books\IBookDao.cs" />
+    <Compile Include="Categories\CategoryDao.cs" />
+    <Compile Include="Categories\ICategoryDao.cs" />
     <Compile Include="Dao.cs" />
     <Compile Include="IDao.cs" />
+    <Compile Include="Lendings\Filters\LendingFilterDto.cs" />
     <Compile Include="Lendings\ILendingDao.cs" />
     <Compile Include="Lendings\LendingDao.cs" />
+    <Compile Include="Members\Filters\MemberFilterDto.cs" />
     <Compile Include="Members\IMemberDao.cs" />
     <Compile Include="Members\MemberDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

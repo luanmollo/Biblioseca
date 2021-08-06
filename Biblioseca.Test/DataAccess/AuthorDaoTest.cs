@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Biblioseca.DataAccess.Authors;
+using Biblioseca.DataAccess.Authors.Filters;
 using Biblioseca.DataAccess.Books;
 using Biblioseca.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -67,6 +68,22 @@ namespace Biblioseca.Test.DataAccess
 
             Assert.IsNotNull(author);
             Assert.AreEqual("William", author.FirstName);
+        }
+
+        [TestMethod]
+        public void GetByFilter()
+        {
+            AuthorDao authorDao = new AuthorDao(this.sessionFactory);
+
+            AuthorFilterDto authorFilterDto = new AuthorFilterDto
+            {
+                FirstName = "Julio",
+                LastName = "Verne"
+            };
+
+            IEnumerable<Author> authors = authorDao.GetByFilter(authorFilterDto);
+
+            Assert.IsTrue(authors.Any());
         }
     }
 }

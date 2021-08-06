@@ -52,6 +52,18 @@ namespace Biblioseca.Test.Services
             Assert.IsFalse(isAvailable);
         }
 
+        [TestMethod]
+        public void List()
+        {
+            this.bookDao.Setup(dao => dao.GetAll()).Returns(default(List<Book>));
+
+            BookService bookService = new BookService(this.bookDao.Object, this.lendingDao.Object);
+
+            IEnumerable<Book> books = bookService.List();
+
+            Assert.AreEqual(books, bookDao);
+        }
+
         private static IEnumerable<Lending> GetLendings()
         {
             List<Lending> lendings = new List<Lending> { new Lending { Id = 1 } };

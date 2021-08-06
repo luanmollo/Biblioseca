@@ -14,7 +14,17 @@ namespace Biblioseca.Model
         public virtual double Price { get; set; }
         public virtual Author Author { get; set; }
         public virtual Category Category { get; set; }
+        public virtual int Stock { get; set; }
 
+        public virtual void WasLended()
+        {
+            this.Stock--;
+        }
+
+        public virtual void WasReturned()
+        {
+            this.Stock++;
+        }
 
 
     }

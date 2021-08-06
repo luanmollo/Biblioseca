@@ -12,5 +12,7 @@ namespace Biblioseca.Model
         public virtual Member Member { get; set; }
         public virtual DateTime LendDate { get; set; }
         public virtual DateTime ReturnDate { get; set; }
+        public virtual bool WasReturned { get; set; }
+
     }
 }

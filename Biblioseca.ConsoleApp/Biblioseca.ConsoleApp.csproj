@@ -77,6 +77,10 @@
       <Project>{06e2ef92-51c2-46c4-9c55-2ccd871792f7}</Project>
       <Name>Biblioseca.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Biblioseca.Service\Biblioseca.Service.csproj">
+      <Project>{19FF61A0-BCCE-4A75-9040-32F9BF902EAA}</Project>
+      <Name>Biblioseca.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

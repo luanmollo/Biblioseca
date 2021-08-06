@@ -83,13 +83,16 @@
   <ItemGroup>
     <Compile Include="DataAccess\AuthorDaoTest.cs" />
     <Compile Include="DataAccess\BookDaoTest.cs" />
+    <Compile Include="DataAccess\CategoryDaoTest.cs" />
     <Compile Include="DataAccess\LendingDaoTest.cs" />
+    <Compile Include="DataAccess\MemberDaoTest.cs" />
     <Compile Include="Models\AuthorTest.cs" />
     <Compile Include="Models\BookTest.cs" />
     <Compile Include="Models\CategoryTest.cs" />
     <Compile Include="Models\LendingTest.cs" />
     <Compile Include="Models\MemberTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthorServiceTest.cs" />
     <Compile Include="Services\BookServiceTest.cs" />
     <Compile Include="Services\LendingServiceTest.cs" />
   </ItemGroup>

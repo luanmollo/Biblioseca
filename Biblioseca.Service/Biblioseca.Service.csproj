@@ -41,8 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorService.cs" />
     <Compile Include="BookService.cs" />
+    <Compile Include="CategoryService.cs" />
     <Compile Include="LendingService.cs" />
+    <Compile Include="MemberService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
