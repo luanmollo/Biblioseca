@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Biblioseca.DataAccess.Members;
-using Biblioseca.DataAccess.Members.Filters;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.Model;
 using Biblioseca.Model.Exceptions;
 
@@ -23,12 +23,6 @@ namespace Biblioseca.Service
         {
             IEnumerable<Member> members = this.memberDao.GetAll();
             Ensure.IsTrue(members.Any(), "No hay socios para listar. ");
-
-            Console.WriteLine("Lista de socios:");
-            foreach(Member member in members)
-            {
-                Console.WriteLine($"\t{member.FirstName} {member.LastName}. UserName: {member.UserName}");
-            }
 
             return members;
 

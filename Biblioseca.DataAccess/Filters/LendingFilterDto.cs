@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Biblioseca.DataAccess.Lendings.Filters
+namespace Biblioseca.DataAccess.Filters
 {
-    public class LendingFilterDto
+    public class LendingFilterDto : Filter
     {
         public int MemberId { get; set; }
         public int BookId { get; set; }
-        public bool WasReturned { get; set; }
+        public DateTime? ReturnDate { get; set; }
     }
 }

@@ -61,7 +61,8 @@ namespace Biblioseca.Test.Models
                 Description = "A description",
                 Price = 1000.0,
                 Title = "A title",
-                ISBN = "123-456-7890"
+                ISBN = "123-456-7890",
+                Stock = 1
             };
 
             this.session.Save(book);
@@ -84,7 +85,6 @@ namespace Biblioseca.Test.Models
                 Book = book,
                 Member = member,
                 LendDate = DateTime.Now,
-                ReturnDate = DateTime.Now.AddDays(2)
             };
 
             this.session.Save(lending);

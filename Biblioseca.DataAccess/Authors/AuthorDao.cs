@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
-using Biblioseca.DataAccess.Authors.Filters;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.Model;
 using NHibernate;
 using NHibernate.Criterion;
 
 namespace Biblioseca.DataAccess.Authors
 {
-    public class AuthorDao : Dao<Author>, IAuthorDao
+    public class AuthorDao : Dao<Author, AuthorFilterDto>, IAuthorDao
     {
         public AuthorDao(ISessionFactory sessionFactory) : base(sessionFactory)
         {
             
         }
 
-        public IEnumerable<Author> GetByFilter(AuthorFilterDto authorFilterDto)
+        public override IEnumerable<Author> GetByFilter(AuthorFilterDto authorFilterDto)
         {
             ICriteria criteria = this.Session
                 .CreateCriteria<Author>();
@@ -30,5 +30,7 @@ namespace Biblioseca.DataAccess.Authors
 
             return criteria.List<Author>();
         }
+
+       
     }
 }

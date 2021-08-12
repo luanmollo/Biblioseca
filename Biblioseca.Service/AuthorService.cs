@@ -18,16 +18,11 @@ namespace Biblioseca.Service
             this.authorDao = authorDao;
         }
 
+
         public IEnumerable<Author> List()
         {
             IEnumerable<Author> authors = this.authorDao.GetAll();
             Ensure.IsTrue(authors.Any(), "No hay autores para listar. ");
-
-            Console.WriteLine("Lista de autores:");
-            foreach (Author author in authors)
-            {
-                Console.WriteLine($"\t{author.FirstName} {author.LastName}");
-            }
 
             return authors;
         }

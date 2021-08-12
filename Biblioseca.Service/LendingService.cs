@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Biblioseca.DataAccess.Books;
 using Biblioseca.DataAccess.Lendings;
-using Biblioseca.DataAccess.Lendings.Filters;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.DataAccess.Members;
 using Biblioseca.Model;
 using Biblioseca.Model.Exceptions;
@@ -31,36 +31,43 @@ namespace Biblioseca.Service
             Member member = memberDao.Get(memberId);
             Ensure.NotNull(member, "Socio no existe. ");
 
-            BookService bookService = new BookService(bookDao, lendingDao);
+            BookService bookService = new BookService(bookDao);
             Ensure.IsTrue(bookService.IsAvailable(bookId), "El libro no está disponible");
 
-            Ensure.IsTrue(!lendingDao.GetNotReturnedLendingsByMemberId(memberId).Any(), "El socio no puede pedir prestado más libros");
+            LendingFilterDto lendingFilterDto = new LendingFilterDto
+            {
+                MemberId = memberId,
+                ReturnDate = null
+            };
 
-            Console.WriteLine(book.Stock);
+            IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);
 
-            book.WasLended();
-            bookDao.Save(book);
+            Ensure.IsTrue(!lendings.Any(), "El socio no puede pedir prestado más libros");
 
             Lending lending = new Lending
             {
                 Book = book,
                 Member = member,
                 LendDate = DateTime.Now,
-                WasReturned = false
             };
+
+            Console.WriteLine(book.Stock);
+
+            lending.Lend();
 
             Console.WriteLine($"Préstamo creado exitosamente. Libro: {lending.Book.Title}. Socio: {lending.Member.FirstName} {lending.Member.LastName}");
 
             //no se graba en la base de datos el cambio en el stock. PREGUNTAR. también probe con bookDao.Save(book)
 
             lendingDao.Save(lending);
+            
 
             Console.WriteLine(book.Stock);
 
             return lending;
         }
 
-        public Lending ReturnABook(int bookId, int memberId)
+        public bool ReturnABook(int bookId, int memberId)
         {
             Book book = bookDao.Get(bookId);
             Ensure.NotNull(book, "Libro no existe. ");
@@ -72,35 +79,29 @@ namespace Biblioseca.Service
             {
                 BookId = bookId,
                 MemberId = memberId,
-                WasReturned = false                
+                ReturnDate = null 
             };
 
             IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);
 
             //en linea 80 busco el primer elemento de lendings y busco su id (si hice bien las cosas nunca deberia haber más de un elemento en lendings)
-            Lending lending = lendingDao.Get(lendings.ElementAt(0).Id);
+            //cuando no existe el prestamo la app corta en la linea 89: System.NullReferenceException
+            Lending lending = lendingDao.Get(lendings.ElementAtOrDefault<Lending>(0).Id);
             Ensure.NotNull(lending, "Préstamo no existe. ");
 
+            //doble validación (si hice bien los pasos anteriores las lineas 93 y 94 no harian falta)
             Ensure.IsTrue(lending.Book == book, "El libro no corresponde al préstamo");
             Ensure.IsTrue(lending.Member == member, "El socio no corresponde al préstamo");
 
-
-            Console.WriteLine(book.Stock);
-
-            book.WasReturned();
-            lending.WasReturned = true;
+            lending.Return();
 
             Console.WriteLine($"Préstamo devuelto exitosamente. Libro: {lending.Book.Title}. Socio: {lending.Member.FirstName} {lending.Member.LastName}");
 
-            bookDao.Save(book);
             lendingDao.Save(lending);
 
-            //no se graba en la base de datos el cambio en el stock. PREGUNTAR. también probe con bookDao.Save(book)
+            //no se graba en la base de datos el cambio en el stock. PREGUNTAR. también probe con bookDao.Save(book). se graba solo cuando hago Session.Flush()
 
-            Console.WriteLine(book.Stock);
-
-
-            return lending;
+            return true;
         }
 
         public IEnumerable<Lending> List()
@@ -108,11 +109,6 @@ namespace Biblioseca.Service
             IEnumerable<Lending> lendings = this.lendingDao.GetAll();
             Ensure.IsTrue(lendings.Any(), "No hay préstamos para listar");
 
-            Console.WriteLine("Lista de préstamos:");
-            foreach(Lending lending in lendings)
-            {
-                Console.WriteLine($"\t{lending.Book.Title}, prestado a {lending.Member.FirstName} {lending.Member.LastName} el {lending.LendDate}");
-            }
             return lendings;
         }
 

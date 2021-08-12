@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Biblioseca.DataAccess.Books;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.DataAccess.Lendings;
 using Biblioseca.DataAccess.Members;
 using Biblioseca.Model;
@@ -38,11 +40,17 @@ namespace Biblioseca.Test.Services
             const int bookId = 1;
             const int memberId = 1;
 
-            this.bookDao.Setup(dao => dao.Get(bookId)).Returns(GetBook());
-            this.memberDao.Setup(dao => dao.Get(memberId)).Returns(GetMember());
-            this.lendingDao.Setup(dao => dao.GetLendingsByBookId(bookId)).Returns(new List<Lending>());
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(GetBook());
+            this.memberDao.Setup(x => x.Get(memberId)).Returns(GetMember());
+
+            LendingFilterDto lendingFilterDto = new LendingFilterDto
+            {
+                BookId = bookId
+            };
+
+            this.lendingDao.Setup(x => x.GetByFilter(lendingFilterDto)).Returns(new List<Lending>());
             this.session.Setup(x => x.Save(It.IsAny<object>()));
-            this.lendingDao.Setup(dao => dao.Session).Returns(this.session.Object);
+            this.lendingDao.Setup(x => x.Session).Returns(this.session.Object);
 
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
@@ -57,8 +65,9 @@ namespace Biblioseca.Test.Services
             const int bookId = 1;
             const int memberId = 1;
 
-            this.bookDao.Setup(dao => dao.Get(bookId)).Returns(default(Book));
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(default(Book));
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
             Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "Libro no existe. ");
         }
@@ -70,34 +79,102 @@ namespace Biblioseca.Test.Services
             const int bookId = 1;
             const int memberId = 1;
 
-            this.bookDao.Setup(dao => dao.Get(bookId)).Returns(default(Book));
-            this.memberDao.Setup(dao => dao.Get(memberId)).Returns(default(Member));
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(GetBook());
+            this.memberDao.Setup(x => x.Get(memberId)).Returns(default(Member));
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
             Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "Socio no existe. ");
         }
 
+
         [TestMethod]
-        public void LendABookWhenBooksWasLended()
+        public void LendABookWhenBooksIsNotAvailable()
         {
             const int bookId = 1;
             const int memberId = 1;
 
-            this.bookDao.Setup(dao => dao.Get(bookId)).Returns(GetBook());
-            this.memberDao.Setup(dao => dao.Get(memberId)).Returns(GetMember());
-            this.lendingDao.Setup(dao => dao.GetLendingsByBookId(bookId)).Returns(GetLendings());
-            this.session.Setup(x => x.Save(It.IsAny<object>()));
-            this.lendingDao.Setup(dao => dao.Session).Returns(this.session.Object);
-
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(new Book { Title = "new book", Stock = 0 });
+            this.memberDao.Setup(x => x.Get(memberId)).Returns(GetMember());
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
             Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
-                "El libro ya fue prestado. ");
+                "El libro no está disponible. ");
+        }
+
+        //arreglar
+        [TestMethod]
+        public void LendABookWhenMemberCanNotGetLendings()
+        {
+            const int bookId = 1;
+            const int memberId = 1;
+
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(GetBook());
+            this.memberDao.Setup(x => x.Get(memberId)).Returns(GetMember());
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            Lending lending = lendingService.LendABook(bookId, memberId);
+            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+                "El socio no puede pedir prestado más libros. ");
+        }
+
+        //arreglar
+        [TestMethod]
+        public void ReturnABook()
+        {
+            const int bookId = 1;
+            const int memberId = 2;
+
+            LendingFilterDto lendingFilterDto = new LendingFilterDto
+            {
+                BookId = bookId,
+                MemberId = memberId,
+                ReturnDate = null
+            };
+
+            this.lendingDao.Setup(x => x.GetByFilter(lendingFilterDto)).Returns(GetLendings());
+
+            bool result = lendingService.ReturnABook(bookId, memberId);
+
+            Assert.IsTrue(result);
+
+            
+        }
+
+        [TestMethod]
+        public void List()
+        {
+            this.lendingDao.Setup(x => x.GetAll()).Returns(GetLendings());
+
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            IEnumerable<Lending> lendings = lendingService.List();
+
+            Assert.IsTrue(lendings.Any());
+        }
+
+        [TestMethod]
+        public void ListWhenThereAreNotLendings()
+        {
+            this.lendingDao.Setup(x => x.GetAll()).Returns(new List<Lending>());
+
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.List(),
+                "No hay préstamos para listar. ");
         }
 
         private static IEnumerable<Lending> GetLendings()
         {
-            List<Lending> lendings = new List<Lending> { new Lending{ Id = 1 } };
+            List<Lending> lendings = new List<Lending> 
+            { 
+                new Lending
+                { 
+                    Id = 1,
+                    Member = GetMember(),
+                    LendDate = DateTime.Now
+                } 
+            };
 
             return lendings;
         }
@@ -106,6 +183,7 @@ namespace Biblioseca.Test.Services
         {
             Member member = new Member()
             {
+                Id = 2,
                 FirstName = "John",
                 LastName = "Smith",
                 UserName = "johnsmith"
@@ -120,10 +198,12 @@ namespace Biblioseca.Test.Services
             {
                 Title = "A title",
                 Description = "A description",
-                Price = 1.0
+                Price = 1.0,
+                Stock = 2
             };
 
             return book;
         }
+
     }
 }

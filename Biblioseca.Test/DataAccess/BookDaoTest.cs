@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Biblioseca.DataAccess.Books;
-using Biblioseca.DataAccess.Books.Filters;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate;
@@ -51,8 +51,6 @@ namespace Biblioseca.Test.DataAccess
             BookFilterDto bookFilterDto = new BookFilterDto
             {
                 Title = "Romeo y Julieta",
-                AuthorFirstName = "Steve",
-                CategoryName = "Aventuras"
             };
 
             IEnumerable<Book> books = bookDao.GetByFilter(bookFilterDto);

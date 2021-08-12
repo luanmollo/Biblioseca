@@ -38,7 +38,7 @@ namespace Biblioseca.Test.Models
             Author author = new Author
             {
                 FirstName = "Wanda",
-            LastName = "Maximoff"
+                LastName = "Maximoff"
             };
 
             this.session.Save(author);

@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
-using Biblioseca.DataAccess.Members.Filters;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.Model;
 using NHibernate;
 using NHibernate.Criterion;
 
 namespace Biblioseca.DataAccess.Members
 {
-    public class MemberDao : Dao<Member>, IMemberDao
+    public class MemberDao : Dao<Member, MemberFilterDto>, IMemberDao
     {
         public MemberDao(ISessionFactory sessionFactory) : base(sessionFactory)
         {
         }
 
-        public IEnumerable<Member> GetByFilter(MemberFilterDto memberFilterDto)
+        public override IEnumerable<Member> GetByFilter(MemberFilterDto memberFilterDto)
         {
             ICriteria criteria = this.Session
                 .CreateCriteria<Member>();
@@ -31,6 +31,8 @@ namespace Biblioseca.DataAccess.Members
             {
                 criteria.Add(Restrictions.Like("UserName", memberFilterDto.UserName, MatchMode.Anywhere));
             }
+
+           
 
 
 

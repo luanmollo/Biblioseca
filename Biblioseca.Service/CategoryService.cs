@@ -23,11 +23,6 @@ namespace Biblioseca.Service
             IEnumerable<Category> categories = this.categoryDao.GetAll();
             Ensure.IsTrue(categories.Any(), "No hay categorías para listar");
 
-            Console.WriteLine("Lista de categorías:");
-            foreach(Category category in categories)
-            {
-                Console.WriteLine($"\t{category.Name}");
-            }
             return categories;
         }
 

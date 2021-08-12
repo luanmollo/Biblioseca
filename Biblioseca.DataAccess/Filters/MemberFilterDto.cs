@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Biblioseca.DataAccess.Authors.Filters
+namespace Biblioseca.DataAccess.Filters
 {
-    public class AuthorFilterDto
+    public class MemberFilterDto : Filter
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string UserName { get; set; }
     }
 }

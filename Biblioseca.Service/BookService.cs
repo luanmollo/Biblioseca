@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Biblioseca.DataAccess.Books;
-using Biblioseca.DataAccess.Books.Filters;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.DataAccess.Lendings;
 using Biblioseca.Model;
 using Biblioseca.Model.Exceptions;
@@ -12,12 +12,10 @@ namespace Biblioseca.Service
     public class BookService
     {
         private readonly BookDao bookDao;
-        private readonly LendingDao lendingDao;
 
-        public BookService(BookDao bookDao, LendingDao lendingDao)
+        public BookService(BookDao bookDao)
         {
             this.bookDao = bookDao;
-            this.lendingDao = lendingDao;
         }
 
         public bool IsAvailable(int bookId)
@@ -26,7 +24,6 @@ namespace Biblioseca.Service
 
             Book book = this.bookDao.Get(bookId);
             Ensure.NotNull(book, "El libro no existe. ");
-            Ensure.IsTrue(book.Stock > 0, "No hay stock disponible del libro. ");
 
             return book.Stock > 0;
         }
@@ -36,13 +33,21 @@ namespace Biblioseca.Service
             IEnumerable<Book> books = this.bookDao.GetAll();
             Ensure.IsTrue(books.Any(), "No hay libros para listar");
 
-            Console.WriteLine("Lista de libros:");
-            foreach (Book book in books)
+            return books;
+        }
+
+        public IEnumerable<Book> ListAvailableBooks()
+        {
+            BookFilterDto bookFilterDto = new BookFilterDto
             {
-                Console.WriteLine($"\t{book.Title}, por {book.Author.FirstName} {book.Author.LastName}");
-            }
+                Stock = 0
+            };
+
+            IEnumerable<Book> books = this.bookDao.GetByFilter(bookFilterDto);
+            Ensure.IsTrue(books.Any(), "No hay libros disponibles para listar");
 
             return books;
+
         }
 
         public IEnumerable<Book> SearchByTitle(string bookTitle)
@@ -53,16 +58,26 @@ namespace Biblioseca.Service
             };
 
             IEnumerable<Book> books = this.bookDao.GetByFilter(bookFilterDtoByTitle);
-            Ensure.IsTrue(books.Count() > 0, "Libro no existe. ");
-
-            Console.WriteLine("Libros encontrados:");
-            foreach (Book book in books)
-            {
-                Console.WriteLine($"\tLibro: {book.Title}. Autor: {book.Author.FirstName} {book.Author.LastName}");
-            }
+            Ensure.IsTrue(books.Any(), "Libro no existe. ");
 
             return books;
         }
+
+        public bool VerifyISBN(int bookId)
+        {
+            Book book = bookDao.Get(bookId);
+            if(book.ISBN.Length == 13)
+            {
+                book.ISBNVerified = true;
+            }
+            else
+            {
+                book.ISBNVerified = false;
+            }
+
+            return book.ISBNVerified;
+        }
+
 
     }
 }

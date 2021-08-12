@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Biblioseca.DataAccess.Authors;
-using Biblioseca.DataAccess.Authors.Filters;
 using Biblioseca.DataAccess.Books;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate;

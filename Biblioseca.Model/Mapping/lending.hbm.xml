@@ -13,13 +13,10 @@
 			<column name="MemberId" sql-type="int" not-null="true" />
 		</many-to-one>
 		<property name="LendDate">
-			<column name="LendDate" sql-type="Datetime" not-null="true" />
+			<column name="LendDate" sql-type="datetime2" not-null="true" />
 		</property>
 		<property name="ReturnDate">
-			<column name="ReturnDate" sql-type="Datetime" not-null="false"/>
-		</property>
-		<property name="WasReturned">
-			<column name="WasReturned" sql-type="bit" not-null="false"/>
+			<column name="ReturnDate" sql-type="datetime2" not-null="false"/>
 		</property>
 	</class>
 </hibernate-mapping>

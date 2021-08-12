@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
-using Biblioseca.DataAccess.Books.Filters;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.Model;
 using NHibernate;
 using NHibernate.Criterion;
 
 namespace Biblioseca.DataAccess.Books
 {
-    public class BookDao : Dao<Book>, IBookDao
+    public class BookDao : Dao<Book, BookFilterDto>, IBookDao
     {
         public BookDao(ISessionFactory sessionFactory) : base(sessionFactory)
         {
             
         }
 
-        public IEnumerable<Book> GetByFilter(BookFilterDto bookFilterDto)
+        public override IEnumerable<Book> GetByFilter(BookFilterDto bookFilterDto)
         {
             ICriteria criteria = this.Session
                 .CreateCriteria<Book>();
@@ -41,14 +41,19 @@ namespace Biblioseca.DataAccess.Books
                     .Add(Restrictions.Like("Name", bookFilterDto.CategoryName, MatchMode.Anywhere));
             }
 
-            if (bookFilterDto.Price != 0)
+            if (bookFilterDto.Price.HasValue)
             {
                 criteria.Add(Restrictions.Gt("Price", bookFilterDto.Price));
+            }
+
+            if (bookFilterDto.Stock.HasValue)
+            {
+                criteria.Add(Restrictions.Gt("Stock", bookFilterDto.Stock));
             }
 
             return criteria.List<Book>();
         }
 
-
+        
     }
 }

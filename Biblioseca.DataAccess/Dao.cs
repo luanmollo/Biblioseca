@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Biblioseca.DataAccess.Filters;
 using NHibernate;
 using NHibernate.Criterion;
 
 namespace Biblioseca.DataAccess
 {
-    public abstract class Dao<T> : IDao<T>
+    public abstract class Dao<T, Filter> : IDao<T>
     {
         private readonly ISessionFactory sessionFactory;
 
@@ -20,8 +21,10 @@ namespace Biblioseca.DataAccess
 
         public void Save(T entity)
         {
-            Session
-                .Save(entity);
+            this.Session
+                .SaveOrUpdate(entity);
+            this.Session.Flush();
+            //si no hacia session.flush los cambios no se guardaban en la bd. tambien deberia hacer .flush en el metodo delete()?
         }
 
         public void Delete(T entity)
@@ -36,7 +39,8 @@ namespace Biblioseca.DataAccess
                 .Get<T>(id);
         }
 
-        public IEnumerable<T> GetAll()
+        //tuve que hacer el metodo GetAll virtual para poder correr los test de List(). ¿está bien o perjudica en algo?
+        public virtual IEnumerable<T> GetAll()
         {
             return this.Session
                 .Query<T>();
@@ -68,6 +72,11 @@ namespace Biblioseca.DataAccess
             return criteria.UniqueResult<T>();
         }
 
-        
+        public abstract IEnumerable<T> GetByFilter(Filter filter);
+
+        //quiero poder hacer que cada dao de cada entidad sobreescriba e implemente el metodo GetByFilter
+        //public abstract IEnumerable<T> GetByFilter(Filter filter);
+
+
     }
 }

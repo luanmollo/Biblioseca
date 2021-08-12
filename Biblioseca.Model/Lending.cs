@@ -10,9 +10,18 @@ namespace Biblioseca.Model
     {
         public virtual Book Book { get; set; }
         public virtual Member Member { get; set; }
-        public virtual DateTime LendDate { get; set; }
-        public virtual DateTime ReturnDate { get; set; }
-        public virtual bool WasReturned { get; set; }
+        public virtual DateTime? LendDate { get; set; }
+        public virtual DateTime? ReturnDate { get; set; }
+
+        public virtual void Lend()
+        {
+            this.Book.Stock--;
+        }
+        public virtual void Return()
+        {
+            this.Book.Stock++;
+            this.ReturnDate = DateTime.Now;
+        } 
 
     }
 }

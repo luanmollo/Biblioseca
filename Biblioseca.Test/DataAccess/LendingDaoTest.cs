@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Biblioseca.DataAccess.Filters;
 using Biblioseca.DataAccess.Lendings;
 using Biblioseca.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -49,7 +50,12 @@ namespace Biblioseca.Test.DataAccess
             
             LendingDao lendingDao = new LendingDao(this.sessionFactory);
 
-            IEnumerable<Lending> lendings = lendingDao.GetLendingsByBookId(1);
+            LendingFilterDto lendingFilterDto = new LendingFilterDto
+            {
+                BookId = 1
+            };
+
+            IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);
 
             Assert.IsTrue(lendings.Any());
         }

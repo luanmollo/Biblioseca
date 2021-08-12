@@ -10,7 +10,7 @@
 			<column name="Title" length="200" not-null="true" />
 		</property>
 		<property name="Description">
-			<column name="Description" length="200" not-null="true" />
+			<column name="Description" length="200" not-null="false" />
 		</property>
 		<property name="ISBN">
 			<column name="ISBN" length="200" not-null="false" />
@@ -25,7 +25,8 @@
 			<column name="CategoryId" sql-type="int" not-null="false"/>
 		</many-to-one>
 		<property name="Stock">
-			<column name="Stock" length="200" not-null="false" />
+			<column name="Stock" length="200" not-null="true" />
 		</property>
+		
 	</class>
 </hibernate-mapping>
