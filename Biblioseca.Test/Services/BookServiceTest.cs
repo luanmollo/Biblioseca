@@ -81,7 +81,7 @@ namespace Biblioseca.Test.Services
         public void ListAvailableBooks()
         {
 
-            this.bookDao.Setup(x => x.GetByFilter(It.IsAny<BookFilterDto>())).Returns(new List<Book>());
+            this.bookDao.Setup(x => x.GetByFilter(new BookFilterDto())).Returns(GetBooks());
 
             this.bookService = new BookService(this.bookDao.Object);
 
@@ -171,13 +171,13 @@ namespace Biblioseca.Test.Services
                 new Book
                 {
                     Title = "book title",
-                    Stock = 2
+                    Stock = 4
                 },
 
                 new Book
                 {
                     Title = "another book title",
-                    Stock = 4
+                    Stock = 2
                 }
             };
 

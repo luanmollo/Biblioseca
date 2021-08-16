@@ -34,6 +34,7 @@ namespace Biblioseca.Test.Services
             this.memberDao = new Mock<MemberDao>(this.sessionFactory.Object);
         }
 
+        //arreglar
         [TestMethod]
         public void LendABook()
         {
@@ -125,16 +126,9 @@ namespace Biblioseca.Test.Services
             const int bookId = 1;
             const int memberId = 2;
 
-            LendingFilterDto lendingFilterDto = new LendingFilterDto
-            {
-                BookId = bookId,
-                MemberId = memberId,
-                ReturnDate = null
-            };
+            this.lendingDao.Setup(x => x.GetByFilter(It.IsAny<LendingFilterDto>())).Returns(GetLendings());
 
-            this.lendingDao.Setup(x => x.GetByFilter(lendingFilterDto)).Returns(GetLendings());
-
-            bool result = lendingService.ReturnABook(bookId, memberId);
+            bool result = this.lendingService.ReturnABook(bookId, memberId);
 
             Assert.IsTrue(result);
 
@@ -171,6 +165,7 @@ namespace Biblioseca.Test.Services
                 new Lending
                 { 
                     Id = 1,
+                    Book = GetBook(),
                     Member = GetMember(),
                     LendDate = DateTime.Now
                 } 
@@ -196,6 +191,7 @@ namespace Biblioseca.Test.Services
         {
             Book book = new Book
             {
+                Id = 1,
                 Title = "A title",
                 Description = "A description",
                 Price = 1.0,

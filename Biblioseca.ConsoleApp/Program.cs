@@ -41,10 +41,8 @@ namespace Biblioseca.ConsoleApp
             LendingService lendingService = new LendingService(lendingDao, bookDao, memberDao);
             MemberService memberService = new MemberService(memberDao);
 
-            Console.WriteLine(bookService.ListAvailableBooks().Any());
 
-
-
+            
 
 
 
