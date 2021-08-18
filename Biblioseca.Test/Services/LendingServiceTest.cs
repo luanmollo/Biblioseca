@@ -34,7 +34,6 @@ namespace Biblioseca.Test.Services
             this.memberDao = new Mock<MemberDao>(this.sessionFactory.Object);
         }
 
-        //arreglar
         [TestMethod]
         public void LendABook()
         {
@@ -44,12 +43,7 @@ namespace Biblioseca.Test.Services
             this.bookDao.Setup(x => x.Get(bookId)).Returns(GetBook());
             this.memberDao.Setup(x => x.Get(memberId)).Returns(GetMember());
 
-            LendingFilterDto lendingFilterDto = new LendingFilterDto
-            {
-                BookId = bookId
-            };
-
-            this.lendingDao.Setup(x => x.GetByFilter(lendingFilterDto)).Returns(new List<Lending>());
+            this.lendingDao.Setup(x => x.GetByFilter(It.IsAny<LendingFilterDto>())).Returns(new List<Lending>());
             this.session.Setup(x => x.Save(It.IsAny<object>()));
             this.lendingDao.Setup(x => x.Session).Returns(this.session.Object);
 
@@ -102,8 +96,7 @@ namespace Biblioseca.Test.Services
             Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "El libro no está disponible. ");
         }
-
-        //arreglar
+        
         [TestMethod]
         public void LendABookWhenMemberCanNotGetLendings()
         {
@@ -112,27 +105,77 @@ namespace Biblioseca.Test.Services
 
             this.bookDao.Setup(x => x.Get(bookId)).Returns(GetBook());
             this.memberDao.Setup(x => x.Get(memberId)).Returns(GetMember());
+            this.lendingDao.Setup(x => x.GetByFilter(It.IsAny<LendingFilterDto>())).Returns(GetLendings());
+
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            Lending lending = lendingService.LendABook(bookId, memberId);
             Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "El socio no puede pedir prestado más libros. ");
         }
 
-        //arreglar
         [TestMethod]
         public void ReturnABook()
         {
             const int bookId = 1;
             const int memberId = 2;
 
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(GetBook());
+            this.memberDao.Setup(x => x.Get(memberId)).Returns(GetMember());
             this.lendingDao.Setup(x => x.GetByFilter(It.IsAny<LendingFilterDto>())).Returns(GetLendings());
+            this.session.Setup(x => x.Save(It.IsAny<object>()));
+            this.lendingDao.Setup(x => x.Session).Returns(this.session.Object);
+
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
             bool result = this.lendingService.ReturnABook(bookId, memberId);
 
             Assert.IsTrue(result);
 
             
+        }
+
+        [TestMethod]
+        public void ReturnABookWhenBookDoesNotExist()
+        {
+            const int bookId = 1;
+            const int memberId = 1;
+
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(default(Book));
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+                "Libro no existe. ");
+        }
+
+
+        [TestMethod]
+        public void ReturnABookWhenMemberDoesNotExist()
+        {
+            const int bookId = 1;
+            const int memberId = 1;
+
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(GetBook());
+            this.memberDao.Setup(x => x.Get(memberId)).Returns(default(Member));
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+                "Socio no existe. ");
+        }
+
+        [TestMethod]
+        public void ReturnABookWhenLendingDoesNotExistOrWasReturned()
+        {
+            const int bookId = 1;
+            const int memberId = 2;
+
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(GetBook());
+            this.memberDao.Setup(x => x.Get(memberId)).Returns(GetMember());
+            this.lendingDao.Setup(x => x.GetByFilter(It.IsAny<LendingFilterDto>())).Returns(GetLendings());
+
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+                "Préstamo no existe o ya fue devuelto. ");
         }
 
         [TestMethod]

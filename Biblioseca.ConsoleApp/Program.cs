@@ -25,24 +25,23 @@ namespace Biblioseca.ConsoleApp
             ISessionFactory sessionFactory = new Configuration()
                 .Configure()
                 .BuildSessionFactory();
-
+            
             ISession session = sessionFactory.OpenSession();
             CurrentSessionContext.Bind(session);
-
+            
             BookDao bookDao = new BookDao(sessionFactory);
             AuthorDao authorDao = new AuthorDao(sessionFactory);
             CategoryDao categoryDao = new CategoryDao(sessionFactory);
             LendingDao lendingDao = new LendingDao(sessionFactory);
             MemberDao memberDao = new MemberDao(sessionFactory);
-
+            
             BookService bookService = new BookService(bookDao);
             AuthorService authorService = new AuthorService(authorDao);
             CategoryService categoryService = new CategoryService(categoryDao);
             LendingService lendingService = new LendingService(lendingDao, bookDao, memberDao);
             MemberService memberService = new MemberService(memberDao);
 
-
-            
+            lendingService.ReturnABook(1, 2);
 
 
 

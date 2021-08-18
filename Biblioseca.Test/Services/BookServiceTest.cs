@@ -75,26 +75,23 @@ namespace Biblioseca.Test.Services
             Assert.ThrowsException<BusinessRuleException>(() => this.bookService.List(),
                 "No hay libros para listar. ");
         }
-        
-        //arreglar
+
         [TestMethod]
         public void ListAvailableBooks()
         {
+            this.bookDao.Setup(x => x.GetByFilter(It.IsAny<BookFilterDto>())).Returns(GetBooks());
 
-            this.bookDao.Setup(x => x.GetByFilter(new BookFilterDto())).Returns(GetBooks());
+            BookService bookService = new BookService(this.bookDao.Object);
 
-            this.bookService = new BookService(this.bookDao.Object);
-
-            IEnumerable<Book> books = this.bookService.ListAvailableBooks();
+            IEnumerable<Book> books = bookService.ListAvailableBooks();
 
             Assert.IsTrue(books.Any());
         }
 
-        //arreglar
         [TestMethod]
         public void ListAvailableBooksWhenThereAreNotAvailableBooks()
         {
-            this.bookDao.Setup(x => x.GetByFilter(It.IsAny<BookFilterDto>())).Returns(GetBooks());
+            this.bookDao.Setup(x => x.GetByFilter(It.IsAny<BookFilterDto>())).Returns(new List<Book>());
 
             this.bookService = new BookService(this.bookDao.Object);
 
@@ -102,8 +99,6 @@ namespace Biblioseca.Test.Services
                 "No hay libros disponibles para listar. ");
         }
 
-
-        //arreglar
         [TestMethod]
         public void SearchByTitle()
         {
@@ -119,7 +114,6 @@ namespace Biblioseca.Test.Services
 
         }
 
-        //arreglar
         [TestMethod]
         public void SearchByTitleWhenBookDoesNotExist()
         {
@@ -184,12 +178,6 @@ namespace Biblioseca.Test.Services
             return books;
         }
 
-        private static IEnumerable<Lending> GetLendings()
-        {
-            List<Lending> lendings = new List<Lending> { new Lending { Id = 1 } };
-
-            return lendings;
-        }
 
         private static Book GetBook(int stock)
         {

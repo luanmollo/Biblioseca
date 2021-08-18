@@ -5,7 +5,7 @@ using NHibernate.Criterion;
 
 namespace Biblioseca.DataAccess
 {
-    public abstract class Dao<T, Filter> : IDao<T>
+    public abstract class Dao<T, KFilter> : IDao<T>
     {
         private readonly ISessionFactory sessionFactory;
 
@@ -72,7 +72,7 @@ namespace Biblioseca.DataAccess
             return criteria.UniqueResult<T>();
         }
 
-        public abstract IEnumerable<T> GetByFilter(Filter filter);
+        public abstract IEnumerable<T> GetByFilter(KFilter filter);
 
         //quiero poder hacer que cada dao de cada entidad sobreescriba e implemente el metodo GetByFilter
         //public abstract IEnumerable<T> GetByFilter(Filter filter);

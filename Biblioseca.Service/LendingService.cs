@@ -57,7 +57,7 @@ namespace Biblioseca.Service
 
             Console.WriteLine($"Préstamo creado exitosamente. Libro: {lending.Book.Title}. Socio: {lending.Member.FirstName} {lending.Member.LastName}");
 
-            //no se graba en la base de datos el cambio en el stock. PREGUNTAR. también probe con bookDao.Save(book)
+            //no se graba en la base de datos el cambio en el stock. PREGUNTAR. también probe con bookDao.Save(book). me anduvo haciendo session.flush() en el metodo save() de la clase Dao
 
             lendingDao.Save(lending);
             
@@ -86,18 +86,15 @@ namespace Biblioseca.Service
 
             //en linea 80 busco el primer elemento de lendings y busco su id (si hice bien las cosas nunca deberia haber más de un elemento en lendings)
             //cuando no existe el prestamo la app corta en la linea 89: System.NullReferenceException
-            Lending lending = lendingDao.Get(lendings.ElementAtOrDefault<Lending>(0).Id);
-            Ensure.NotNull(lending, "Préstamo no existe. ");
+            Ensure.NotNull(lendings.FirstOrDefault<Lending>(), "Préstamo no existe o ya fue devuelto. ");
 
             //doble validación (si hice bien los pasos anteriores las lineas 93 y 94 no harian falta)
-            Ensure.IsTrue(lending.Book == book, "El libro no corresponde al préstamo");
-            Ensure.IsTrue(lending.Member == member, "El socio no corresponde al préstamo");
+            Ensure.IsTrue(lendings.FirstOrDefault<Lending>().Book.Id == book.Id, "El libro no corresponde al préstamo");
+            Ensure.IsTrue(lendings.FirstOrDefault<Lending>().Member.Id == member.Id, "El socio no corresponde al préstamo");
 
-            lending.Return();
+            lendings.FirstOrDefault<Lending>().Return();
 
-            Console.WriteLine($"Préstamo devuelto exitosamente. Libro: {lending.Book.Title}. Socio: {lending.Member.FirstName} {lending.Member.LastName}");
-
-            lendingDao.Save(lending);
+            lendingDao.Save(lendings.FirstOrDefault<Lending>());
 
             //no se graba en la base de datos el cambio en el stock. PREGUNTAR. también probe con bookDao.Save(book). se graba solo cuando hago Session.Flush()
 
