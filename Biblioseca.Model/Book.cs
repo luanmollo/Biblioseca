@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Biblioseca.Model.Exceptions;
 
 namespace Biblioseca.Model
 {
@@ -17,7 +18,36 @@ namespace Biblioseca.Model
         public virtual int Stock { get; set; }
         public virtual bool ISBNVerified { get; set; }
 
+        public static Book Create(
+            string title,
+            string description,
+            string ISBN,
+            double price,
+            Category category,
+            Author author,
+            int stock)
+        {
+            Ensure.NotNull(title, "Titulo no puede ser nulo. ");
+            Ensure.NotNull(description, "Descrición no puede ser nula. ");
+            Ensure.NotNull(ISBN, "ISBN no puede ser nulo. ");
+            Ensure.IsTrue(price > 0, "Precio debe ser mayor que 0. ");
+            Ensure.NotNull(category, "Categoría no puede ser nula. ");
+            Ensure.NotNull(author, "Author no puede ser nulo. ");
+            Ensure.IsTrue(stock > 0, "Stock debe ser mayor que 0. ");
 
+            Book book = new Book
+            {
+                Title = title,
+                Description = description,
+                ISBN = ISBN,
+                Price = price,
+                Category = category,
+                Author = author,
+                Stock = stock
+            };
+
+            return book;
+        }
 
     }
 }

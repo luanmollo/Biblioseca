@@ -18,6 +18,11 @@ namespace Biblioseca.Service
             this.bookDao = bookDao;
         }
 
+        public void Create(Book book)
+        {
+            this.bookDao.Save(book);
+        }
+
         public bool IsAvailable(int bookId)
         {
             Ensure.IsTrue(bookId > 0, "Book.Id debe ser mayor que 0.");
@@ -77,6 +82,8 @@ namespace Biblioseca.Service
 
             return book.ISBNVerified;
         }
+
+
 
 
 

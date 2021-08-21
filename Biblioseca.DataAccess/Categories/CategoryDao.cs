@@ -22,6 +22,8 @@ namespace Biblioseca.DataAccess.Categories
                 criteria.Add(Restrictions.Like("Name", categoryFilterDto.Name, MatchMode.Anywhere));
             }
 
+            criteria.Add(Restrictions.Eq("Deleted", false));
+
             return criteria.List<Category>();
         }
 

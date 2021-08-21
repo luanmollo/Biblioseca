@@ -8,13 +8,13 @@ using Biblioseca.DataAccess.Filters;
 using Biblioseca.Model;
 using Biblioseca.Model.Exceptions;
 using Biblioseca.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NHibernate;
+using NUnit.Framework;
 
 namespace Biblioseca.Test.Services
 {
-    [TestClass]
+    [TestFixture]
     public class AuthorServiceTest
     {
         private AuthorService authorService;
@@ -22,7 +22,7 @@ namespace Biblioseca.Test.Services
         private Mock<ISessionFactory> sessionFactory;
         private Mock<ISession> session;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             this.sessionFactory = new Mock<ISessionFactory>();
@@ -30,8 +30,21 @@ namespace Biblioseca.Test.Services
             this.authorDao = new Mock<AuthorDao>(this.sessionFactory.Object);
         }
 
+        [Test]
+        public void Get()
+        {
+            int authorId = 1;
 
-        [TestMethod]
+            this.authorDao.Setup(x => x.Get(authorId)).Returns(new Author { Id = 1 });
+
+            AuthorService authorService = new AuthorService(this.authorDao.Object);
+
+            Author author = authorService.Get(authorId);
+
+            Assert.NotNull(author);
+        }
+
+        [Test]
         public void List()
         {
 
@@ -45,14 +58,14 @@ namespace Biblioseca.Test.Services
 
         }
 
-        [TestMethod]
+        [Test]
         public void ListWhenThereAreNotAuthors()
         {
             this.authorDao.Setup(x => x.GetAll()).Returns(new List<Author>());
 
             this.authorService = new AuthorService(this.authorDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.authorService.List(),
+            Assert.Throws<BusinessRuleException>(() => this.authorService.List(),
                 "No hay autores para listar. ");
         }
 

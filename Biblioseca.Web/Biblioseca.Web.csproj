@@ -118,9 +118,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Authors.aspx" />
-    <Content Include="Books.aspx" />
-    <Content Include="Categories.aspx" />
+    <Content Include="Authors\Create.aspx" />
+    <Content Include="Authors\Edit.aspx" />
+    <Content Include="Authors\Index.aspx" />
+    <Content Include="Books\Create.aspx" />
+    <Content Include="Books\Index.aspx" />
+    <Content Include="Categories\Categories.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -139,8 +142,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Lendings.aspx" />
-    <Content Include="Members.aspx" />
+    <Content Include="Lendings\Lendings.aspx" />
+    <Content Include="Members\Members.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -178,25 +181,49 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Authors.aspx.cs">
-      <DependentUpon>Authors.aspx</DependentUpon>
+    <Compile Include="Authors\Create.aspx.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Authors.aspx.designer.cs">
-      <DependentUpon>Authors.aspx</DependentUpon>
+    <Compile Include="Authors\Create.aspx.designer.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Books.aspx.cs">
-      <DependentUpon>Books.aspx</DependentUpon>
+    <Compile Include="Authors\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Books.aspx.designer.cs">
-      <DependentUpon>Books.aspx</DependentUpon>
+    <Compile Include="Authors\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Categories.aspx.cs">
+    <Compile Include="Authors\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Authors\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Books\Create.aspx.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Books\Create.aspx.designer.cs">
+      <DependentUpon>Create.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Books\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Books\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Categories\Categories.aspx.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Categories.aspx.designer.cs">
+    <Compile Include="Categories\Categories.aspx.designer.cs">
       <DependentUpon>Categories.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
@@ -209,18 +236,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Lendings.aspx.cs">
+    <Compile Include="Lendings\Lendings.aspx.cs">
       <DependentUpon>Lendings.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Lendings.aspx.designer.cs">
+    <Compile Include="Lendings\Lendings.aspx.designer.cs">
       <DependentUpon>Lendings.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Members.aspx.cs">
+    <Compile Include="Members\Members.aspx.cs">
       <DependentUpon>Members.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Members.aspx.designer.cs">
+    <Compile Include="Members\Members.aspx.designer.cs">
       <DependentUpon>Members.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

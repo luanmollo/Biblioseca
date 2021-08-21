@@ -8,7 +8,9 @@ namespace Biblioseca.DataAccess.Filters
 {
     public abstract class Filter
     {
+        public bool Deleted { get; set; }
+
     }
 
-    
+
 }

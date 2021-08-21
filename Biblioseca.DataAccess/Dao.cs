@@ -23,29 +23,35 @@ namespace Biblioseca.DataAccess
         {
             this.Session
                 .SaveOrUpdate(entity);
-            this.Session.Flush();
-            //si no hacia session.flush los cambios no se guardaban en la bd. tambien deberia hacer .flush en el metodo delete()?
-        }
-
-        public void Delete(T entity)
-        {
-            this.Session
-                .Delete(entity);
+            //this.Session.Flush();
+            //si no hacia session.flush los cambios no se guardaban en la bd. está bien?
         }
 
         public virtual T Get(int id)
         {
-            return this.Session
-                .Get<T>(id);
+
+            ICriteria criteria = this.Session
+               .CreateCriteria(typeof(T));
+
+            criteria.Add(Restrictions.Eq("Id", id));
+            criteria.Add(Restrictions.Eq("Deleted", false));
+
+            return criteria.UniqueResult<T>();
         }
 
         //tuve que hacer el metodo GetAll virtual para poder correr los test de List(). ¿está bien o perjudica en algo?
         public virtual IEnumerable<T> GetAll()
         {
-            return this.Session
-                .Query<T>();
+
+            ICriteria criteria = this.Session
+               .CreateCriteria(typeof(T));
+
+            criteria.Add(Restrictions.Eq("Deleted", false));
+
+            return criteria.List<T>();
         }
 
+        //el metodo getuniquebyhqlquery no tiene filtro de deleted
         public T GetUniqueByHqlQuery(string queryString, IDictionary<string, object> parameters)
         {
             IQuery query = this.Session
@@ -67,6 +73,7 @@ namespace Biblioseca.DataAccess
             foreach (KeyValuePair<string, object> keyValue in parameters)
             {
                 criteria.Add(Restrictions.Eq(keyValue.Key, keyValue.Value));
+                criteria.Add(Restrictions.Eq("Deleted", false));
             }
 
             return criteria.UniqueResult<T>();

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace Biblioseca.Web
 {
-    public partial class _Default : Page
+    public partial class _Default : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

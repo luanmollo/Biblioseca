@@ -51,6 +51,8 @@ namespace Biblioseca.DataAccess.Books
                 criteria.Add(Restrictions.Gt("Stock", bookFilterDto.Stock));
             }
 
+            criteria.Add(Restrictions.Eq("Deleted", false));
+
             return criteria.List<Book>();
         }
 

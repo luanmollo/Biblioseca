@@ -4,20 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Biblioseca.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate;
 using NHibernate.Cfg;
+using NUnit.Framework;
 
 namespace Biblioseca.Test.Models
 {
-    [TestClass]
+    [TestFixture]
     public class AuthorTest
     {
         private ISessionFactory sessionFactory;
         private ISession session;
         private ITransaction transaction;
 
-        [TestInitialize]
+        private string firstName;
+        private string lastName;
+
+        [SetUp]
         public void SetUp()
         {
             this.sessionFactory = new Configuration().Configure().BuildSessionFactory();
@@ -25,14 +28,14 @@ namespace Biblioseca.Test.Models
             this.transaction = this.session.BeginTransaction();
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanUp()
         {
             this.transaction.Rollback();
             this.session.Close();
         }
 
-        [TestMethod]
+        [Test]
         public void CreateAuthor()
         {
             Author author = new Author
@@ -52,6 +55,5 @@ namespace Biblioseca.Test.Models
             Assert.AreEqual(author.Id, created.Id);
         }
 
-        
     }
 }

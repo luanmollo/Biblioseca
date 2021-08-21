@@ -18,6 +18,21 @@ namespace Biblioseca.Service
             this.authorDao = authorDao;
         }
 
+        public void Create(Author author)
+        {
+            this.authorDao.Save(author);
+        }
+
+        public Author Get(int authorId)
+        {
+            return this.authorDao.Get(authorId);
+        }
+
+        public void Update(Author author)
+        {
+            this.authorDao.Save(author);
+        }
+
 
         public IEnumerable<Author> List()
         {

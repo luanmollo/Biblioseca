@@ -7,13 +7,13 @@ using Biblioseca.DataAccess.Lendings;
 using Biblioseca.Model;
 using Biblioseca.Model.Exceptions;
 using Biblioseca.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NHibernate;
+using NUnit.Framework;
 
 namespace Biblioseca.Test.Services
 {
-    [TestClass]
+    [TestFixture]
     public class BookServiceTest
     {
         private BookService bookService;
@@ -21,7 +21,7 @@ namespace Biblioseca.Test.Services
         private Mock<ISessionFactory> sessionFactory;
         private Mock<ISession> session;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             this.sessionFactory = new Mock<ISessionFactory>();
@@ -29,7 +29,7 @@ namespace Biblioseca.Test.Services
             this.bookDao = new Mock<BookDao>(this.sessionFactory.Object);
         }
 
-        [TestMethod]
+        [Test]
         public void IsAvailable()
         {
             const int bookId = 1;
@@ -41,7 +41,7 @@ namespace Biblioseca.Test.Services
             Assert.IsTrue(isAvailable);
         }
 
-        [TestMethod]
+        [Test]
         public void IsNotAvailable()
         {
             const int bookId = 1;
@@ -53,7 +53,7 @@ namespace Biblioseca.Test.Services
             Assert.IsFalse(isAvailable);
         }
 
-        [TestMethod]
+        [Test]
         public void List()
         {
             this.bookDao.Setup(x => x.GetAll()).Returns(GetBooks());
@@ -65,18 +65,18 @@ namespace Biblioseca.Test.Services
             Assert.IsTrue(books.Any());
         }
 
-        [TestMethod]
+        [Test]
         public void ListWhenThereAreNotBooks()
         {
             this.bookDao.Setup(x => x.GetAll()).Returns(new List<Book>());
 
             this.bookService = new BookService(this.bookDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.bookService.List(),
+            Assert.Throws<BusinessRuleException>(() => this.bookService.List(),
                 "No hay libros para listar. ");
         }
 
-        [TestMethod]
+        [Test]
         public void ListAvailableBooks()
         {
             this.bookDao.Setup(x => x.GetByFilter(It.IsAny<BookFilterDto>())).Returns(GetBooks());
@@ -88,18 +88,18 @@ namespace Biblioseca.Test.Services
             Assert.IsTrue(books.Any());
         }
 
-        [TestMethod]
+        [Test]
         public void ListAvailableBooksWhenThereAreNotAvailableBooks()
         {
             this.bookDao.Setup(x => x.GetByFilter(It.IsAny<BookFilterDto>())).Returns(new List<Book>());
 
             this.bookService = new BookService(this.bookDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.bookService.ListAvailableBooks(),
+            Assert.Throws<BusinessRuleException>(() => this.bookService.ListAvailableBooks(),
                 "No hay libros disponibles para listar. ");
         }
 
-        [TestMethod]
+        [Test]
         public void SearchByTitle()
         {
             const string bookTitle = "book title";
@@ -114,7 +114,7 @@ namespace Biblioseca.Test.Services
 
         }
 
-        [TestMethod]
+        [Test]
         public void SearchByTitleWhenBookDoesNotExist()
         {
             const string bookTitle = "book title";
@@ -123,12 +123,12 @@ namespace Biblioseca.Test.Services
 
             this.bookService = new BookService(this.bookDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.bookService.SearchByTitle(bookTitle),
+            Assert.Throws<BusinessRuleException>(() => this.bookService.SearchByTitle(bookTitle),
                 "Libro no existe. ");
 
         }
 
-        [TestMethod]
+        [Test]
         public void VerifyISBN()
         {
             const int bookId = 1;
@@ -143,7 +143,7 @@ namespace Biblioseca.Test.Services
 
         }
 
-        [TestMethod]
+        [Test]
         public void VerifyISBNWhenISBNIsNotCorrect()
         {
             const int bookId = 1;

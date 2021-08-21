@@ -28,24 +28,5 @@ namespace Biblioseca.Service
 
         }
 
-        public IEnumerable<Member> SearchByLastName(string memberLastName)
-        {
-            MemberFilterDto memberFilterDtoByTitle = new MemberFilterDto
-            {
-                LastName = memberLastName
-            };
-
-            IEnumerable<Member> members = this.memberDao.GetByFilter(memberFilterDtoByTitle);
-            Ensure.IsTrue(members.Count() > 0, "Socio no existe. ");
-
-            Console.WriteLine("Socios encontrados:");
-            foreach (Member member in members)
-            {
-                Console.WriteLine($"\tSocio: {member.FirstName} {member.LastName}");
-            }
-
-            return members;
-        }
-
     }
 }

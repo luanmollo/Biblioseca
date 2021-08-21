@@ -19,5 +19,8 @@
 			<key column="MemberId"/>
 			<one-to-many class="Lending"/>
 		</set>
+		<property name="Deleted">
+			<column name="Deleted" sql-type="bit" not-null="true" />
+		</property>
 	</class>
 </hibernate-mapping>

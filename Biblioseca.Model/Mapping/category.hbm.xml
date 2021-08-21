@@ -9,5 +9,8 @@
 		<property name="Name">
 			<column name="Name" length="200" not-null="true" />
 		</property>
+		<property name="Deleted">
+			<column name="Deleted" sql-type="bit" not-null="true" />
+		</property>
 	</class>
 </hibernate-mapping>

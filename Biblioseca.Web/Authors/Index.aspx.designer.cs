@@ -7,20 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Biblioseca.Web
+namespace Biblioseca.Web.Authors
 {
 
 
-    public partial class Books
+    public partial class Index
     {
 
         /// <summary>
-        /// GridViewBooks control.
+        /// GridViewAuthors control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewBooks;
+        protected global::System.Web.UI.WebControls.GridView GridViewAuthors;
+
+        /// <summary>
+        /// linkCreateNewAuthor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton linkCreateNewAuthor;
     }
 }

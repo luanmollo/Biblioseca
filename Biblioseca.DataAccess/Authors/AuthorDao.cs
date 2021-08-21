@@ -28,6 +28,9 @@ namespace Biblioseca.DataAccess.Authors
                 criteria.Add(Restrictions.Like("LastName", authorFilterDto.LastName, MatchMode.Anywhere));
             }
 
+            criteria.Add(Restrictions.Eq("Deleted", false));
+
+
             return criteria.List<Author>();
         }
 

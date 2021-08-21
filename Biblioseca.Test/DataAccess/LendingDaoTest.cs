@@ -4,21 +4,21 @@ using System.Linq;
 using Biblioseca.DataAccess.Filters;
 using Biblioseca.DataAccess.Lendings;
 using Biblioseca.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Context;
+using NUnit.Framework;
 
 namespace Biblioseca.Test.DataAccess
 {
-    [TestClass]
+    [TestFixture]
     public class LendingDaoTest
     {
         private ISessionFactory sessionFactory;
         private ISession session;
         private ITransaction transaction;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             this.sessionFactory = new Configuration().Configure().BuildSessionFactory();
@@ -27,14 +27,14 @@ namespace Biblioseca.Test.DataAccess
             CurrentSessionContext.Bind(this.session);
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanUp()
         {
             this.transaction.Rollback();
             this.session.Close();
         }
 
-        [TestMethod]
+        [Test]
         public void GetAll()
         {
             LendingDao lendingDao = new LendingDao(this.sessionFactory);
@@ -44,7 +44,7 @@ namespace Biblioseca.Test.DataAccess
             Assert.IsTrue(lendings.Any());
         }
 
-        [TestMethod]
+        [Test]
         public void GetByBook()
         {
             
@@ -53,6 +53,21 @@ namespace Biblioseca.Test.DataAccess
             LendingFilterDto lendingFilterDto = new LendingFilterDto
             {
                 BookId = 1
+            };
+
+            IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);
+
+            Assert.IsTrue(lendings.Any());
+        }
+
+        [Test]
+        public void GetByMember()
+        {
+            LendingDao lendingDao = new LendingDao(this.sessionFactory);
+
+            LendingFilterDto lendingFilterDto = new LendingFilterDto
+            {
+                MemberId = 1
             };
 
             IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);

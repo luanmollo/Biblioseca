@@ -7,13 +7,13 @@ using Biblioseca.DataAccess.Categories;
 using Biblioseca.Model;
 using Biblioseca.Model.Exceptions;
 using Biblioseca.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NHibernate;
+using NUnit.Framework;
 
 namespace Biblioseca.Test.Services
 {
-    [TestClass]
+    [TestFixture]
 
     public class CategoryServiceTest
     {
@@ -22,7 +22,7 @@ namespace Biblioseca.Test.Services
         private Mock<ISessionFactory> sessionFactory;
         private Mock<ISession> session;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             this.sessionFactory = new Mock<ISessionFactory>();
@@ -30,7 +30,33 @@ namespace Biblioseca.Test.Services
             this.categoryDao = new Mock<CategoryDao>(this.sessionFactory.Object);
         }
 
-        [TestMethod]
+        [Test]
+        public void Get()
+        {
+            int categoryId = 1;
+
+            this.categoryDao.Setup(x => x.Get(categoryId)).Returns(new Category { Id = 1 });
+
+            CategoryService categoryService = new CategoryService(this.categoryDao.Object);
+
+            Category category = categoryService.Get(categoryId);
+
+            Assert.NotNull(category);
+        }
+
+        [Test]
+        public void GetAll()
+        {
+            this.categoryDao.Setup(x => x.GetAll()).Returns(GetCategories());
+
+            CategoryService categoryService = new CategoryService(this.categoryDao.Object);
+
+            IEnumerable<Category> categories = categoryService.GetAll();
+
+            Assert.NotNull(categories);
+        }
+
+        [Test]
         public void List()
         {
             this.categoryDao.Setup(x => x.GetAll()).Returns(GetCategories());
@@ -41,13 +67,13 @@ namespace Biblioseca.Test.Services
 
         }
 
-        [TestMethod]
+        [Test]
         public void ListWhenThereAreNotCategories()
         {
             this.categoryDao.Setup(x => x.GetAll()).Returns(new List<Category>());
             this.categoryService = new CategoryService(this.categoryDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.categoryService.List(),
+            Assert.Throws<BusinessRuleException>(() => this.categoryService.List(),
                 "No hay categorías para listar. ");
         }
 

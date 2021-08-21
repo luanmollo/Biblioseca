@@ -32,10 +32,7 @@ namespace Biblioseca.DataAccess.Members
                 criteria.Add(Restrictions.Like("UserName", memberFilterDto.UserName, MatchMode.Anywhere));
             }
 
-           
-
-
-
+            criteria.Add(Restrictions.Eq("Deleted", false));
 
             return criteria.List<Member>();
         }

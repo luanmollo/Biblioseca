@@ -7,13 +7,13 @@ using Biblioseca.DataAccess.Members;
 using Biblioseca.Model;
 using Biblioseca.Model.Exceptions;
 using Biblioseca.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NHibernate;
+using NUnit.Framework;
 
 namespace Biblioseca.Test.Services
 {
-    [TestClass]
+    [TestFixture]
     public class MemberServiceTest
     {
         private MemberService memberService;
@@ -21,7 +21,7 @@ namespace Biblioseca.Test.Services
         private Mock<ISessionFactory> sessionFactory;
         private Mock<ISession> session;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             this.sessionFactory = new Mock<ISessionFactory>();
@@ -29,7 +29,7 @@ namespace Biblioseca.Test.Services
             this.memberDao = new Mock<MemberDao>(this.sessionFactory.Object);
         }
 
-        [TestMethod]
+        [Test]
         public void List()
         {
             this.memberDao.Setup(x => x.GetAll()).Returns(GetMembers());
@@ -41,13 +41,13 @@ namespace Biblioseca.Test.Services
         }
 
        
-        [TestMethod]
+        [Test]
         public void ListWhenThereAreNotMembers()
         {
             this.memberDao.Setup(x => x.GetAll()).Returns(new List<Member>());
             this.memberService = new MemberService(this.memberDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.memberService.List(),
+            Assert.Throws<BusinessRuleException>(() => this.memberService.List(),
                 "No hay socios para listar. ");
         }
 

@@ -8,13 +8,13 @@ using Biblioseca.DataAccess.Members;
 using Biblioseca.Model;
 using Biblioseca.Model.Exceptions;
 using Biblioseca.Service;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NHibernate;
+using NUnit.Framework;
 
 namespace Biblioseca.Test.Services
 {
-    [TestClass]
+    [TestFixture]
     public class LendingServiceTest
     {
         private LendingService lendingService;
@@ -24,7 +24,7 @@ namespace Biblioseca.Test.Services
         private Mock<ISessionFactory> sessionFactory;
         private Mock<ISession> session;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             this.sessionFactory = new Mock<ISessionFactory>();
@@ -34,7 +34,7 @@ namespace Biblioseca.Test.Services
             this.memberDao = new Mock<MemberDao>(this.sessionFactory.Object);
         }
 
-        [TestMethod]
+        [Test]
         public void LendABook()
         {
             const int bookId = 1;
@@ -54,7 +54,7 @@ namespace Biblioseca.Test.Services
             Assert.IsNotNull(lending);
         }
 
-        [TestMethod]
+        [Test]
         public void LendABookWhenBookDoesNotExist()
         {
             const int bookId = 1;
@@ -63,12 +63,12 @@ namespace Biblioseca.Test.Services
             this.bookDao.Setup(x => x.Get(bookId)).Returns(default(Book));
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+            Assert.Throws<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "Libro no existe. ");
         }
 
 
-        [TestMethod]
+        [Test]
         public void LendABookWhenMemberDoesNotExist()
         {
             const int bookId = 1;
@@ -78,12 +78,12 @@ namespace Biblioseca.Test.Services
             this.memberDao.Setup(x => x.Get(memberId)).Returns(default(Member));
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+            Assert.Throws<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "Socio no existe. ");
         }
 
 
-        [TestMethod]
+        [Test]
         public void LendABookWhenBooksIsNotAvailable()
         {
             const int bookId = 1;
@@ -93,11 +93,11 @@ namespace Biblioseca.Test.Services
             this.memberDao.Setup(x => x.Get(memberId)).Returns(GetMember());
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+            Assert.Throws<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "El libro no está disponible. ");
         }
         
-        [TestMethod]
+        [Test]
         public void LendABookWhenMemberCanNotGetLendings()
         {
             const int bookId = 1;
@@ -109,11 +109,11 @@ namespace Biblioseca.Test.Services
 
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+            Assert.Throws<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "El socio no puede pedir prestado más libros. ");
         }
 
-        [TestMethod]
+        [Test]
         public void ReturnABook()
         {
             const int bookId = 1;
@@ -134,7 +134,7 @@ namespace Biblioseca.Test.Services
             
         }
 
-        [TestMethod]
+        [Test]
         public void ReturnABookWhenBookDoesNotExist()
         {
             const int bookId = 1;
@@ -143,12 +143,12 @@ namespace Biblioseca.Test.Services
             this.bookDao.Setup(x => x.Get(bookId)).Returns(default(Book));
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+            Assert.Throws<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "Libro no existe. ");
         }
 
 
-        [TestMethod]
+        [Test]
         public void ReturnABookWhenMemberDoesNotExist()
         {
             const int bookId = 1;
@@ -158,11 +158,11 @@ namespace Biblioseca.Test.Services
             this.memberDao.Setup(x => x.Get(memberId)).Returns(default(Member));
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+            Assert.Throws<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "Socio no existe. ");
         }
 
-        [TestMethod]
+        [Test]
         public void ReturnABookWhenLendingDoesNotExistOrWasReturned()
         {
             const int bookId = 1;
@@ -174,11 +174,11 @@ namespace Biblioseca.Test.Services
 
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
+            Assert.Throws<BusinessRuleException>(() => this.lendingService.LendABook(bookId, memberId),
                 "Préstamo no existe o ya fue devuelto. ");
         }
 
-        [TestMethod]
+        [Test]
         public void List()
         {
             this.lendingDao.Setup(x => x.GetAll()).Returns(GetLendings());
@@ -190,14 +190,14 @@ namespace Biblioseca.Test.Services
             Assert.IsTrue(lendings.Any());
         }
 
-        [TestMethod]
+        [Test]
         public void ListWhenThereAreNotLendings()
         {
             this.lendingDao.Setup(x => x.GetAll()).Returns(new List<Lending>());
 
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            Assert.ThrowsException<BusinessRuleException>(() => this.lendingService.List(),
+            Assert.Throws<BusinessRuleException>(() => this.lendingService.List(),
                 "No hay préstamos para listar. ");
         }
 
