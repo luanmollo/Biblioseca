@@ -19,6 +19,11 @@ namespace Biblioseca.Service
             this.memberDao = memberDao;
         }
 
+        public Member Get(int memberId)
+        {
+            return this.memberDao.Get(memberId);
+        }
+
         public IEnumerable<Member> List()
         {
             IEnumerable<Member> members = this.memberDao.GetAll();

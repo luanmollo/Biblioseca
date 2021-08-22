@@ -17,9 +17,6 @@ namespace Biblioseca.Test.Models
         private ISession session;
         private ITransaction transaction;
 
-        private string firstName;
-        private string lastName;
-
         [SetUp]
         public void SetUp()
         {

@@ -16,6 +16,6 @@ namespace Biblioseca.Model
         public virtual string LastName { get; set; }
         public virtual string UserName { get; set; }
         public virtual ISet<Lending> Lendings { get; set; }
-
+        public virtual string FullName => FirstName + " " + LastName;
     }
 }

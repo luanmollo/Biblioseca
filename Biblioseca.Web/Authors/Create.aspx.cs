@@ -23,14 +23,14 @@ namespace Biblioseca.Web.Authors
         {
             AuthorService authorService = new AuthorService(authorDao);
 
-            Author author = Author
-                .Create(
-                    textBoxFirstName.Text,
-                    textBoxLastName.Text
-                );
+            Author author = new Author
+            {
+                FirstName = textBoxFirstName.Text,
+                LastName = textBoxLastName.Text
+            };
 
-            authorService.Create(author);
-
+            authorDao.Save(author);
+            
             Response.Redirect("~/Authors/Index.aspx");
         }
     }

@@ -51,23 +51,14 @@ namespace Biblioseca.Service
                 LendDate = DateTime.Now,
             };
 
-            Console.WriteLine(book.Stock);
-
             lending.Lend();
 
-            Console.WriteLine($"Préstamo creado exitosamente. Libro: {lending.Book.Title}. Socio: {lending.Member.FirstName} {lending.Member.LastName}");
-
-            //no se graba en la base de datos el cambio en el stock. PREGUNTAR. también probe con bookDao.Save(book). me anduvo haciendo session.flush() en el metodo save() de la clase Dao
-
             lendingDao.Save(lending);
-            
-
-            Console.WriteLine(book.Stock);
 
             return lending;
         }
 
-        public bool ReturnABook(int bookId, int memberId)
+        public Lending ReturnABook(int bookId, int memberId)
         {
             Book book = bookDao.Get(bookId);
             Ensure.NotNull(book, "Libro no existe. ");
@@ -92,13 +83,15 @@ namespace Biblioseca.Service
             Ensure.IsTrue(lendings.FirstOrDefault<Lending>().Book.Id == book.Id, "El libro no corresponde al préstamo");
             Ensure.IsTrue(lendings.FirstOrDefault<Lending>().Member.Id == member.Id, "El socio no corresponde al préstamo");
 
-            lendings.FirstOrDefault<Lending>().Return();
+            Lending lending = lendings.FirstOrDefault<Lending>();
 
-            lendingDao.Save(lendings.FirstOrDefault<Lending>());
+            lending.Return();
+
+            lendingDao.Save(lending);
 
             //no se graba en la base de datos el cambio en el stock. PREGUNTAR. también probe con bookDao.Save(book). se graba solo cuando hago Session.Flush()
 
-            return true;
+            return lending;
         }
 
         public IEnumerable<Lending> List()

@@ -18,9 +18,9 @@ namespace Biblioseca.Service
             this.bookDao = bookDao;
         }
 
-        public void Create(Book book)
+        public Book Get(int bookId)
         {
-            this.bookDao.Save(book);
+            return this.bookDao.Get(bookId);
         }
 
         public bool IsAvailable(int bookId)
@@ -55,19 +55,6 @@ namespace Biblioseca.Service
 
         }
 
-        public IEnumerable<Book> SearchByTitle(string bookTitle)
-        {
-            BookFilterDto bookFilterDtoByTitle = new BookFilterDto
-            {
-                Title = bookTitle
-            };
-
-            IEnumerable<Book> books = this.bookDao.GetByFilter(bookFilterDtoByTitle);
-            Ensure.IsTrue(books.Any(), "Libro no existe. ");
-
-            return books;
-        }
-
         public bool VerifyISBN(int bookId)
         {
             Book book = bookDao.Get(bookId);
@@ -82,11 +69,6 @@ namespace Biblioseca.Service
 
             return book.ISBNVerified;
         }
-
-
-
-
-
 
     }
 }

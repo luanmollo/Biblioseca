@@ -127,9 +127,9 @@ namespace Biblioseca.Test.Services
 
             this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
 
-            bool result = this.lendingService.ReturnABook(bookId, memberId);
+            Lending lending = this.lendingService.ReturnABook(bookId, memberId);
 
-            Assert.IsTrue(result);
+            Assert.NotNull(lending);
 
             
         }

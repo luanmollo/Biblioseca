@@ -29,6 +29,8 @@ namespace Biblioseca.DataAccess.Lendings
                     .Add(Restrictions.Eq("Id", lendingFilterDto.BookId));
             }
 
+            criteria.Add(Restrictions.Eq("ReturnDate", lendingFilterDto.ReturnDate));
+
             criteria.Add(Restrictions.Eq("Deleted", false));
 
             return criteria.List<Lending>();

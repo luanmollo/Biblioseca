@@ -44,13 +44,28 @@ namespace Biblioseca.Test.DataAccess
         }
 
         [Test]
-        public void GetByFilter()
+        public void GetByTitle()
         {
             BookDao bookDao = new BookDao(this.sessionFactory);
 
             BookFilterDto bookFilterDto = new BookFilterDto
             {
                 Title = "Romeo y Julieta",
+            };
+
+            IEnumerable<Book> books = bookDao.GetByFilter(bookFilterDto);
+
+            Assert.IsTrue(books.Any());
+        }
+
+        [Test]
+        public void GetAvailableBooks()
+        {
+            BookDao bookDao = new BookDao(this.sessionFactory);
+
+            BookFilterDto bookFilterDto = new BookFilterDto
+            {
+                Stock = 0
             };
 
             IEnumerable<Book> books = bookDao.GetByFilter(bookFilterDto);

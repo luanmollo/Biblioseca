@@ -40,10 +40,10 @@ namespace Biblioseca.Web.Authors
             Author author = authorService.Get(this.authorId);
             Ensure.NotNull(author, "Author no existe. ");
 
-            author.SetFirstName(this.textBoxFirstName.Text);
-            author.SetLastName(this.textBoxLastName.Text);
+            author.FirstName = this.textBoxFirstName.Text;
+            author.LastName = this.textBoxLastName.Text;
 
-            authorService.Update(author);
+            authorDao.Save(author);
 
             Response.Redirect("~/Authors/Index.aspx");
         }

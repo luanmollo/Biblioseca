@@ -18,14 +18,9 @@ namespace Biblioseca.Service
             this.categoryDao = categoryDao;
         }
 
-        public IEnumerable<Category> GetAll()
+        public Category Get(int categoryId)
         {
-            return this.categoryDao.GetAll();
-        }
-
-        public Category Get(int id)
-        {
-            return this.categoryDao.Get(id);
+            return this.categoryDao.Get(categoryId);
         }
 
         public IEnumerable<Category> List()

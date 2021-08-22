@@ -30,6 +30,20 @@ namespace Biblioseca.Test.Services
         }
 
         [Test]
+        public void Get()
+        {
+            int bookId = 1;
+
+            this.bookDao.Setup(x => x.Get(bookId)).Returns(new Book { Id = 1 });
+
+            BookService bookService = new BookService(this.bookDao.Object);
+
+            Book book = bookService.Get(bookId);
+
+            Assert.NotNull(book);
+        }
+
+        [Test]
         public void IsAvailable()
         {
             const int bookId = 1;
@@ -99,34 +113,6 @@ namespace Biblioseca.Test.Services
                 "No hay libros disponibles para listar. ");
         }
 
-        [Test]
-        public void SearchByTitle()
-        {
-            const string bookTitle = "book title";
-
-            this.bookDao.Setup(x => x.GetByFilter(It.IsAny<BookFilterDto>())).Returns(GetBooks());
-
-            this.bookService = new BookService(this.bookDao.Object);
-
-            IEnumerable<Book> books = bookService.SearchByTitle(bookTitle);
-
-            Assert.IsTrue(books.Any());
-
-        }
-
-        [Test]
-        public void SearchByTitleWhenBookDoesNotExist()
-        {
-            const string bookTitle = "book title";
-
-            this.bookDao.Setup(x => x.GetByFilter(It.IsAny<BookFilterDto>())).Returns(new List<Book>());
-
-            this.bookService = new BookService(this.bookDao.Object);
-
-            Assert.Throws<BusinessRuleException>(() => this.bookService.SearchByTitle(bookTitle),
-                "Libro no existe. ");
-
-        }
 
         [Test]
         public void VerifyISBN()

@@ -30,6 +30,20 @@ namespace Biblioseca.Test.Services
         }
 
         [Test]
+        public void Get()
+        {
+            int memberId = 1;
+
+            this.memberDao.Setup(x => x.Get(memberId)).Returns(new Member { Id = 1 });
+
+            MemberService memberService = new MemberService(this.memberDao.Object);
+
+            Member member = memberService.Get(memberId);
+
+            Assert.NotNull(member);
+        }
+
+        [Test]
         public void List()
         {
             this.memberDao.Setup(x => x.GetAll()).Returns(GetMembers());

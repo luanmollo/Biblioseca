@@ -51,7 +51,7 @@ namespace Biblioseca.Test.Services
 
             CategoryService categoryService = new CategoryService(this.categoryDao.Object);
 
-            IEnumerable<Category> categories = categoryService.GetAll();
+            IEnumerable<Category> categories = categoryService.List();
 
             Assert.NotNull(categories);
         }

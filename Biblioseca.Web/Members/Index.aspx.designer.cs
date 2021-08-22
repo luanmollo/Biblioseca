@@ -7,20 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Biblioseca.Web
+namespace Biblioseca.Web.Members
 {
 
 
-    public partial class Categories
+    public partial class Index
     {
 
         /// <summary>
-        /// GridViewCategories control.
+        /// GridViewMembers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridViewCategories;
+        protected global::System.Web.UI.WebControls.GridView GridViewMembers;
+
+        /// <summary>
+        /// linkCreateNewMember control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton linkCreateNewMember;
     }
 }
