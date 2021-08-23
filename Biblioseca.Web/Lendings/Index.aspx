@@ -2,6 +2,12 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Lendings</h2>
+
+    <asp:DropDownList id="selectedView" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList_SelectedIndexChanged" CssClass="form-control">
+        <asp:ListItem Value="all">Ver todos los préstamos</asp:ListItem>
+        <asp:ListItem Value="actual">Ver préstamos en curso</asp:ListItem>
+    </asp:DropDownList>
+    <br />
     <asp:GridView ID="GridViewLendings" runat="server" AutoGenerateColumns="false" DataKeyNames="Id"
                   OnRowDeleting="GridViewLendings_RowDeleting" OnRowEditing="GridViewLendings_RowEditing" CssClass="table table-bordered table-hover">
         <Columns>

@@ -42,12 +42,12 @@ namespace Biblioseca.Web.Lendings
         protected global::System.Web.UI.WebControls.Button buttonCreateLending;
 
         /// <summary>
-        /// BackToList control.
+        /// buttonBackToLendings control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink BackToList;
+        protected global::System.Web.UI.WebControls.Button buttonBackToLendings;
     }
 }

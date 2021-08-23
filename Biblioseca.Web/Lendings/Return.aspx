@@ -24,6 +24,6 @@
         </div>
     </div>
     <div>
-        <asp:HyperLink ID="BackToList" runat="server">Volver a préstamos</asp:HyperLink>
+        <asp:Button ID="buttonBackToLendings" runat="server" Text="Volver a préstamos" OnClick="ButtonBackToLendings_Click" CssClass="btn btn-default"/>
     </div>
 </asp:Content>

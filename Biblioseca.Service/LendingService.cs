@@ -98,9 +98,59 @@ namespace Biblioseca.Service
         {
             IEnumerable<Lending> lendings = this.lendingDao.GetAll();
             Ensure.IsTrue(lendings.Any(), "No hay préstamos para listar");
-
+                        
             return lendings;
         }
+
+        public IEnumerable<Lending> ListActualLendings()
+        {
+            LendingFilterDto lendingFilterDto = new LendingFilterDto
+            {
+                ReturnDate = null
+            };
+
+            IEnumerable<Lending> lendings = this.lendingDao.GetByFilter(lendingFilterDto);
+            Ensure.IsTrue(lendings.Any(), "No hay préstamos para listar");
+
+            return lendings;
+
+        }
+
+        public Lending Get(int lendingId)
+        {
+            return this.lendingDao.Get(lendingId);
+        }
+
+        public LendingError ThereAreLendings()
+        {
+            IEnumerable<Lending> lendings = this.lendingDao.GetAll();
+
+            LendingError lendingError = new LendingError
+            {
+                HasError = !lendings.Any()
+            };
+
+            return lendingError;
+        }
+
+        public LendingError CanGetLending(int memberId)
+        {
+            LendingFilterDto lendingFilterDto = new LendingFilterDto
+            {
+                MemberId = memberId,
+                ReturnDate = null
+            };
+
+            IEnumerable<Lending> lendings = this.lendingDao.GetByFilter(lendingFilterDto);
+
+            LendingError lendingError = new LendingError
+            {
+                HasError = lendings.Any()
+            };
+
+            return lendingError;
+        }
+
 
 
     }

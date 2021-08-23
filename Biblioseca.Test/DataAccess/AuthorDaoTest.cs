@@ -37,7 +37,7 @@ namespace Biblioseca.Test.DataAccess
         [Test]
         public void Get()
         {
-            int authorId = 5;
+            int authorId = 1280;
 
             AuthorDao authorDao = new AuthorDao(this.sessionFactory);
 

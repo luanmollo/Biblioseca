@@ -7,13 +7,13 @@ using Biblioseca.DataAccess.Members;
 using Biblioseca.DataAccess.Filters;
 using Biblioseca.Model;
 using Biblioseca.Model.Exceptions;
+using Biblioseca.DataAccess.Lendings;
 
 namespace Biblioseca.Service
 {
     public class MemberService
     {
         private readonly MemberDao memberDao;
-
         public MemberService(MemberDao memberDao)
         {
             this.memberDao = memberDao;

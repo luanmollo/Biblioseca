@@ -15,9 +15,9 @@ namespace Biblioseca.Web.Books
 {
     public partial class Edit : BasePage
     {
-        private readonly BookDao bookDao = new BookDao(Global.SessionFactory);
         private readonly AuthorDao authorDao = new AuthorDao(Global.SessionFactory);
         private readonly CategoryDao categoryDao = new CategoryDao(Global.SessionFactory);
+        private readonly BookDao bookDao = new BookDao(Global.SessionFactory);
         private int bookId;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,37 +32,47 @@ namespace Biblioseca.Web.Books
         {
             BindAuthors();
             BindCategories();
+            BindBook();
         }
 
         private void BindCategories()
         {
             CategoryService categoryService = new CategoryService(this.categoryDao);
-            IEnumerable<Category> categories = categoryService.List();
-            Ensure.IsTrue(categories.Any(), "No existen categorías. ");
-
-            this.categoryList.DataTextField = "value";
-            this.categoryList.DataValueField = "key";
-            this.categoryList.DataSource = categories
-                .ToDictionary(category => category.Id, category => $"{category.Name}");
+            this.categoryList.DataValueField = nameof(Category.Id);
+            this.categoryList.DataTextField = nameof(Category.Name);
+            this.categoryList.DataSource = categoryService.List();
             this.categoryList.DataBind();
         }
 
         private void BindAuthors()
         {
             AuthorService authorService = new AuthorService(this.authorDao);
-            IEnumerable<Author> authors = authorService.List();
-            Ensure.IsTrue(authors.Any(), "No existen autores. ");
-
-            this.authorList.DataTextField = "value";
-            this.authorList.DataValueField = "key";
-            this.authorList.DataSource = authors
-                .ToDictionary(author => author.Id, author => $"{author.FirstName} {author.LastName}");
+            this.authorList.DataValueField = nameof(Author.Id);
+            this.authorList.DataTextField = nameof(Author.FullName);
+            this.authorList.DataSource = authorService.List();
             this.authorList.DataBind();
+        }
+
+        private void BindBook()
+        {
+            BookService bookService = new BookService(this.bookDao);
+            //no trae el libro ARREGLAR
+            Book book = bookService.Get(this.bookId);
+            Ensure.NotNull(book, "El libro no existe. ");
+
+            this.textBoxTitle.Text = book.Title;
+            this.textBoxDescription.Text = book.Description;
+            this.textBoxISBN.Text = book.ISBN;
+            this.textBoxPrice.Text = book.Price.ToString();
+            this.categoryList.SelectedValue = book.Category.Id.ToString();
+            this.authorList.SelectedValue = book.Author.Id.ToString();
+            this.textBoxStock.Text = book.Stock.ToString();
+
         }
 
         protected void ButtonEditBook_Click(object sender, EventArgs e)
         {
-            BookService bookService= new BookService(bookDao);
+            BookService bookService = new BookService(this.bookDao);
             //no trae el libro ARREGLAR
             Book book = bookService.Get(this.bookId);
             Ensure.NotNull(book, "El libro no existe. ");
@@ -87,6 +97,7 @@ namespace Biblioseca.Web.Books
 
             Response.Redirect("~/Books/Index.aspx");
         }
+
 
 
     }

@@ -146,8 +146,11 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Lendings\Create.aspx" />
+    <Content Include="Lendings\Edit.aspx" />
     <Content Include="Lendings\Index.aspx" />
+    <Content Include="Lendings\Errors\MemberCanNotGetLendingError.aspx" />
     <Content Include="Lendings\Return.aspx" />
+    <Content Include="Lendings\Errors\ThereAreNotLendingsError.aspx" />
     <Content Include="Members\Create.aspx" />
     <Content Include="Members\Edit.aspx" />
     <Content Include="Members\Index.aspx" />
@@ -271,6 +274,13 @@
     <Compile Include="Lendings\Create.aspx.designer.cs">
       <DependentUpon>Create.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Lendings\Edit.aspx.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lendings\Edit.aspx.designer.cs">
+      <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Lendings\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -278,12 +288,26 @@
     <Compile Include="Lendings\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Lendings\Errors\MemberCanNotGetLendingError.aspx.cs">
+      <DependentUpon>MemberCanNotGetLendingError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lendings\Errors\MemberCanNotGetLendingError.aspx.designer.cs">
+      <DependentUpon>MemberCanNotGetLendingError.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Lendings\Return.aspx.cs">
       <DependentUpon>Return.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Lendings\Return.aspx.designer.cs">
       <DependentUpon>Return.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lendings\Errors\ThereAreNotLendingsError.aspx.cs">
+      <DependentUpon>ThereAreNotLendingsError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lendings\Errors\ThereAreNotLendingsError.aspx.designer.cs">
+      <DependentUpon>ThereAreNotLendingsError.aspx</DependentUpon>
     </Compile>
     <Compile Include="Members\Create.aspx.cs">
       <DependentUpon>Create.aspx</DependentUpon>

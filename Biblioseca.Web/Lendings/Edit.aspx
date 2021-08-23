@@ -1,7 +1,7 @@
-﻿<%@ Page Title="Create Lending" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Create.aspx.cs" Inherits="Biblioseca.Web.Lendings.Create" %>
+﻿<%@ Page Title="Edit Lending" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Edit.aspx.cs" Inherits="Biblioseca.Web.Lendings.Edit" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Create</h2>
+    <h2>Edit</h2>
     <div class="form-horizontal">
         <h4>Lending</h4>
         <hr/>
@@ -19,11 +19,8 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <asp:Button ID="buttonCreateLending" runat="server" Text="Crear" OnClick="ButtonCreateLending_Click" CssClass="btn btn-default"/>
+                <asp:Button ID="buttonEditLending" runat="server" Text="Guardar" OnClick="ButtonEditLending_Click" CssClass="btn btn-default"/>
             </div>
         </div>
-    </div>
-    <div>
-        <asp:Button ID="buttonBackToLendings" runat="server" Text="Volver a préstamos" OnClick="ButtonBackToLendings_Click" CssClass="btn btn-default"/>
     </div>
 </asp:Content>

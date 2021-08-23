@@ -52,7 +52,7 @@ namespace Biblioseca.Test.DataAccess
 
             LendingFilterDto lendingFilterDto = new LendingFilterDto
             {
-                BookId = 1
+                BookId = 895
             };
 
             IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);
@@ -67,7 +67,7 @@ namespace Biblioseca.Test.DataAccess
 
             LendingFilterDto lendingFilterDto = new LendingFilterDto
             {
-                MemberId = 1
+                MemberId = 4134
             };
 
             IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);

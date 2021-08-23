@@ -20,6 +20,14 @@ namespace Biblioseca.Web.Lendings
         private readonly MemberDao memberDao = new MemberDao(Global.SessionFactory);
         protected void Page_Load(object sender, EventArgs e)
         {
+            LendingService lendingService = new LendingService(this.lendingDao, this.bookDao, this.memberDao);
+            LendingError lendingError = lendingService.ThereAreLendings();
+
+            if (lendingError.HasError)
+            {
+                Response.Redirect("~/Lendings/Errors/ThereAreNotLendingsError.aspx");
+            }
+
             if (!this.IsPostBack)
             {
                 this.BindGrid();
@@ -30,9 +38,25 @@ namespace Biblioseca.Web.Lendings
         {
             LendingService lendingService = new LendingService(lendingDao, bookDao, memberDao);
 
-            this.GridViewLendings.DataSource = lendingService.List();
+            if(selectedView.SelectedValue == "all")
+            {
+                this.GridViewLendings.DataSource = lendingService.List();
+            }
+            else
+            {
+                if(selectedView.SelectedValue == "actual")
+                {
+                    this.GridViewLendings.DataSource = lendingService.ListActualLendings();
+                }
+            }
             this.GridViewLendings.DataBind();
         }
+
+        protected void DropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.BindGrid();
+        }
+
 
         protected void LinkCreateNewLending_OnClick(object sender, EventArgs e)
         {
@@ -59,7 +83,6 @@ namespace Biblioseca.Web.Lendings
             lending.MarkAsDeleted();
             this.lendingDao.Save(lending);
 
-            this.BindGrid();
             this.PageReload();
         }
 

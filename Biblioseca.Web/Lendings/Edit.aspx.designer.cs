@@ -11,7 +11,7 @@ namespace Biblioseca.Web.Lendings
 {
 
 
-    public partial class Return
+    public partial class Edit
     {
 
         /// <summary>
@@ -33,21 +33,12 @@ namespace Biblioseca.Web.Lendings
         protected global::System.Web.UI.WebControls.DropDownList memberList;
 
         /// <summary>
-        /// buttonReturnLending control.
+        /// buttonEditLending control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonReturnLending;
-
-        /// <summary>
-        /// buttonBackToLendings control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonBackToLendings;
+        protected global::System.Web.UI.WebControls.Button buttonEditLending;
     }
 }

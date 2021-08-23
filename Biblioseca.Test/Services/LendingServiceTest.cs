@@ -35,6 +35,20 @@ namespace Biblioseca.Test.Services
         }
 
         [Test]
+        public void Get()
+        {
+            int lendingId = 1;
+
+            this.lendingDao.Setup(x => x.Get(lendingId)).Returns(new Lending { Id = 1 });
+
+            LendingService lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            Lending lending = lendingService.Get(lendingId);
+
+            Assert.NotNull(lending);
+        }
+
+        [Test]
         public void LendABook()
         {
             const int bookId = 1;
@@ -200,6 +214,55 @@ namespace Biblioseca.Test.Services
             Assert.Throws<BusinessRuleException>(() => this.lendingService.List(),
                 "No hay préstamos para listar. ");
         }
+
+        [Test]
+        public void ListActualLendings()
+        {
+            this.lendingDao.Setup(x => x.GetByFilter(It.IsAny<LendingFilterDto>())).Returns(GetLendings());
+
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            IEnumerable<Lending> lendings = this.lendingService.ListActualLendings();
+
+            Assert.IsTrue(lendings.Any());
+        }
+
+        [Test]
+        public void ListActualLendingsWhenThereAreNotActualLendings()
+        {
+            this.lendingDao.Setup(x => x.GetByFilter(It.IsAny<LendingFilterDto>())).Returns(new List<Lending>());
+
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            Assert.Throws<BusinessRuleException>(() => this.lendingService.ListActualLendings(),
+                "No hay préstamos para listar");
+        }
+
+        [Test]
+        public void ThereAreLendings()
+        {
+            this.lendingDao.Setup(x => x.GetAll()).Returns(new List<Lending>());
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            LendingError lendingError = this.lendingService.ThereAreLendings();
+
+            Assert.IsTrue(lendingError.HasError);
+        }
+
+        [Test]
+        public void CanGetLending()
+        {
+            int memberId = 2;
+
+            this.lendingDao.Setup(x => x.GetByFilter(It.IsAny<LendingFilterDto>())).Returns(GetLendings());
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            LendingError lendingError = this.lendingService.CanGetLending(memberId);
+
+            Assert.IsTrue(lendingError.HasError);
+
+        }
+
 
         private static IEnumerable<Lending> GetLendings()
         {

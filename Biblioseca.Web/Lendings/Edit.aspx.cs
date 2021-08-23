@@ -8,18 +8,22 @@ using Biblioseca.DataAccess.Books;
 using Biblioseca.DataAccess.Lendings;
 using Biblioseca.DataAccess.Members;
 using Biblioseca.Model;
+using Biblioseca.Model.Exceptions;
 using Biblioseca.Service;
 
 namespace Biblioseca.Web.Lendings
 {
-    public partial class Return : BasePage
+    public partial class Edit : BasePage
     {
         private readonly LendingDao lendingDao = new LendingDao(Global.SessionFactory);
         private readonly BookDao bookDao = new BookDao(Global.SessionFactory);
         private readonly MemberDao memberDao = new MemberDao(Global.SessionFactory);
+        private int lendingId;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
+            this.lendingId = Convert.ToInt32(Request.QueryString.Get("id"));
+
+            if (!this.IsPostBack)
             {
                 this.BindData();
             }
@@ -29,6 +33,7 @@ namespace Biblioseca.Web.Lendings
         {
             BindBooks();
             BindMembers();
+            BindLending();
         }
 
         private void BindBooks()
@@ -49,25 +54,36 @@ namespace Biblioseca.Web.Lendings
             this.memberList.DataBind();
         }
 
-        protected void ButtonReturnLending_Click(object sender, EventArgs e)
+        private void BindLending()
         {
-            BookService bookService = new BookService(this.bookDao);
-            Book book = bookService.Get(Convert.ToInt32(this.bookList.SelectedValue));
+            LendingService lendingService = new LendingService(this.lendingDao, this.bookDao, this.memberDao);
+            Lending lending = lendingService.Get(this.lendingId);
+            Ensure.NotNull(lending, "El préstamo no existe. ");
 
-            MemberService memberService = new MemberService(this.memberDao);
-            Member member = memberService.Get(Convert.ToInt32(this.memberList.SelectedValue));
+            this.bookList.SelectedValue = lending.Book.Id.ToString();
+            this.memberList.SelectedValue = lending.Member.Id.ToString();
 
-            LendingService lendingService = new LendingService(lendingDao, bookDao, memberDao);
-
-            Lending lending = lendingService.ReturnABook(book.Id, member.Id);
-
-            lendingDao.Save(lending);
-
-            Response.Redirect("~/Lendings/Index.aspx");
         }
 
-        protected void ButtonBackToLendings_Click(object sender, EventArgs e)
+        protected void ButtonEditLending_Click(object sender, EventArgs e)
         {
+            MemberService memberService = new MemberService(this.memberDao);
+            Member member = memberService.Get(Convert.ToInt32(this.memberList.SelectedValue));
+            Ensure.NotNull(member, "El socio no existe. ");
+
+            BookService bookService = new BookService(this.bookDao);
+            Book book = bookService.Get(Convert.ToInt32(this.bookList.SelectedValue));
+            Ensure.NotNull(book, "El libro no existe. ");
+
+            LendingService lendingService = new LendingService(this.lendingDao, this.bookDao, this.memberDao);
+            Lending lending = lendingService.Get(this.lendingId);
+
+            lending.Book = bookService.Get(Convert.ToInt32(this.bookList.SelectedValue));
+            lending.Member = memberService.Get(Convert.ToInt32(this.memberList.SelectedValue));
+
+            //solamente se puede cambiar el libro y el socio, no se puede cambiar la fecha de prestamo
+            lendingDao.Save(lending);
+
             Response.Redirect("~/Lendings/Index.aspx");
         }
     }

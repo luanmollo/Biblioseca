@@ -12,7 +12,7 @@ using Biblioseca.Service;
 
 namespace Biblioseca.Web.Lendings
 {
-    public partial class Create : System.Web.UI.Page
+    public partial class Create : BasePage
     {
         private readonly LendingDao lendingDao = new LendingDao(Global.SessionFactory);
         private readonly BookDao bookDao = new BookDao(Global.SessionFactory);
@@ -51,6 +51,7 @@ namespace Biblioseca.Web.Lendings
 
         protected void ButtonCreateLending_Click(object sender, EventArgs e)
         {
+
             BookService bookService = new BookService(this.bookDao);
             Book book = bookService.Get(Convert.ToInt32(this.bookList.SelectedValue));
 
@@ -59,10 +60,22 @@ namespace Biblioseca.Web.Lendings
 
             LendingService lendingService = new LendingService(lendingDao, bookDao, memberDao);
 
+            LendingError lendingError = lendingService.CanGetLending(member.Id);
+
+            if (lendingError.HasError)
+            {
+                Response.Redirect("~/Lendings/Errors/MemberCanNotGetLendingError.aspx");
+            }
+
             Lending lending = lendingService.LendABook(book.Id, member.Id);
 
             lendingDao.Save(lending);
 
+            Response.Redirect("~/Lendings/Index.aspx");
+        }
+
+        protected void ButtonBackToLendings_Click(object sender, EventArgs e)
+        {
             Response.Redirect("~/Lendings/Index.aspx");
         }
     }
