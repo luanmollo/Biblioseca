@@ -37,7 +37,7 @@ namespace Biblioseca.Service
             LendingFilterDto lendingFilterDto = new LendingFilterDto
             {
                 MemberId = memberId,
-                ReturnDate = null
+                Returned = false
             };
 
             IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);
@@ -70,20 +70,18 @@ namespace Biblioseca.Service
             {
                 BookId = bookId,
                 MemberId = memberId,
-                ReturnDate = null 
+                Returned = false
             };
 
-            IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);
+            Lending lending = lendingDao.GetByFilter(lendingFilterDto).FirstOrDefault();
 
             //en linea 80 busco el primer elemento de lendings y busco su id (si hice bien las cosas nunca deberia haber más de un elemento en lendings)
             //cuando no existe el prestamo la app corta en la linea 89: System.NullReferenceException
-            Ensure.NotNull(lendings.FirstOrDefault<Lending>(), "Préstamo no existe o ya fue devuelto. ");
+            Ensure.NotNull(lending, "Préstamo no existe o ya fue devuelto. ");
 
             //doble validación (si hice bien los pasos anteriores las lineas 93 y 94 no harian falta)
-            Ensure.IsTrue(lendings.FirstOrDefault<Lending>().Book.Id == book.Id, "El libro no corresponde al préstamo");
-            Ensure.IsTrue(lendings.FirstOrDefault<Lending>().Member.Id == member.Id, "El socio no corresponde al préstamo");
-
-            Lending lending = lendings.FirstOrDefault<Lending>();
+            Ensure.IsTrue(lending.Book.Id == book.Id, "El libro no corresponde al préstamo");
+            Ensure.IsTrue(lending.Member.Id == member.Id, "El socio no corresponde al préstamo");
 
             lending.Return();
 
@@ -106,7 +104,7 @@ namespace Biblioseca.Service
         {
             LendingFilterDto lendingFilterDto = new LendingFilterDto
             {
-                ReturnDate = null
+                Returned = false
             };
 
             IEnumerable<Lending> lendings = this.lendingDao.GetByFilter(lendingFilterDto);
@@ -138,7 +136,7 @@ namespace Biblioseca.Service
             LendingFilterDto lendingFilterDto = new LendingFilterDto
             {
                 MemberId = memberId,
-                ReturnDate = null
+                Returned = false
             };
 
             IEnumerable<Lending> lendings = this.lendingDao.GetByFilter(lendingFilterDto);
@@ -151,7 +149,24 @@ namespace Biblioseca.Service
             return lendingError;
         }
 
+        public LendingError LendingExist(int bookId, int memberId)
+        {
+            LendingFilterDto lendingFilterDto = new LendingFilterDto
+            {
+                BookId = bookId,
+                MemberId = memberId,
+                Returned = false
+            };
 
+            Lending lending = this.lendingDao.GetByFilter(lendingFilterDto).FirstOrDefault();
+
+            LendingError lendingError = new LendingError
+            {
+                HasError = (lending == null)
+            };
+
+            return lendingError;
+        }
 
     }
 }

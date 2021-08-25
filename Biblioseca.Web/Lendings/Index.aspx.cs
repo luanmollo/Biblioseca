@@ -77,13 +77,7 @@ namespace Biblioseca.Web.Lendings
         protected void GridViewLendings_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int lendingId = Convert.ToInt32(this.GridViewLendings.DataKeys[e.RowIndex]?.Values?[0]);
-            Lending lending = this.lendingDao.Get(lendingId);
-            Ensure.NotNull(lending, "El préstamo no existe. ");
-
-            lending.MarkAsDeleted();
-            this.lendingDao.Save(lending);
-
-            this.PageReload();
+            Response.Redirect(string.Format("~/Lendings/SureToDelete.aspx?id={0}", lendingId));
         }
 
 

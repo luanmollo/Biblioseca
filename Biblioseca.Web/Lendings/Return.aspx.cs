@@ -36,7 +36,7 @@ namespace Biblioseca.Web.Lendings
             BookService bookService = new BookService(this.bookDao);
             this.bookList.DataValueField = nameof(Book.Id);
             this.bookList.DataTextField = nameof(Book.Title);
-            this.bookList.DataSource = bookService.ListAvailableBooks();
+            this.bookList.DataSource = bookService.List();
             this.bookList.DataBind();
         }
 
@@ -58,6 +58,13 @@ namespace Biblioseca.Web.Lendings
             Member member = memberService.Get(Convert.ToInt32(this.memberList.SelectedValue));
 
             LendingService lendingService = new LendingService(lendingDao, bookDao, memberDao);
+
+            LendingError lendingError = lendingService.LendingExist(book.Id, member.Id);
+
+            if (lendingError.HasError)
+            {
+                Response.Redirect("~/Lendings/Errors/LendingDoesNotExistOrHasBeenAlreadyReturnedError.aspx");
+            }
 
             Lending lending = lendingService.ReturnABook(book.Id, member.Id);
 

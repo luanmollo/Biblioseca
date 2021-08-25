@@ -16,6 +16,14 @@ namespace Biblioseca.Web.Members
         private readonly MemberDao memberDao = new MemberDao(Global.SessionFactory);
         protected void Page_Load(object sender, EventArgs e)
         {
+            MemberService memberService= new MemberService(this.memberDao);
+            MemberError memberError = memberService.ThereAreMembers();
+
+            if (memberError.HasError)
+            {
+                Response.Redirect("~/Members/Errors/ThereAreNotMembersError.aspx");
+            }
+
             if (!this.IsPostBack)
             {
                 this.BindGrid();
@@ -44,14 +52,7 @@ namespace Biblioseca.Web.Members
         protected void GridViewMembers_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int memberId = Convert.ToInt32(this.GridViewMembers.DataKeys[e.RowIndex]?.Values?[0]);
-            Member member = this.memberDao.Get(memberId);
-            Ensure.NotNull(member, "El socio no existe. ");
-
-            member.MarkAsDeleted();
-            this.memberDao.Save(member);
-
-            this.BindGrid();
-            this.PageReload();
+            Response.Redirect(string.Format("~/Members/SureToDelete.aspx?id={0}", memberId));
         }
     }
 }

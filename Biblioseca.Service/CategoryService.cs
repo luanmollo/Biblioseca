@@ -31,5 +31,17 @@ namespace Biblioseca.Service
             return categories;
         }
 
+        public CategoryError ThereAreCategories()
+        {
+            IEnumerable<Category> categories = this.categoryDao.GetAll();
+
+            CategoryError categoryError = new CategoryError
+            {
+                HasError = !categories.Any()
+            };
+
+            return categoryError;
+        }
+
     }
 }

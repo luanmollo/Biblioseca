@@ -70,5 +70,17 @@ namespace Biblioseca.Service
             return book.ISBNVerified;
         }
 
+        public BookError ThereAreBooks()
+        {
+            IEnumerable<Book> books = this.bookDao.GetAll();
+
+            BookError bookError = new BookError
+            {
+                HasError = !books.Any()
+            };
+
+            return bookError;
+        }
+
     }
 }

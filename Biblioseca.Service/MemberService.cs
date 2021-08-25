@@ -30,7 +30,18 @@ namespace Biblioseca.Service
             Ensure.IsTrue(members.Any(), "No hay socios para listar. ");
 
             return members;
+        }
 
+        public MemberError ThereAreMembers()
+        {
+            IEnumerable<Member> members = this.memberDao.GetAll();
+
+            MemberError memberError = new MemberError
+            {
+                HasError = !members.Any()
+            };
+
+            return memberError;
         }
 
     }

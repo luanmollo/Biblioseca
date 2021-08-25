@@ -16,6 +16,14 @@ namespace Biblioseca.Web.Categories
         private readonly CategoryDao categoryDao = new CategoryDao(Global.SessionFactory);
         protected void Page_Load(object sender, EventArgs e)
         {
+            CategoryService categoryService = new CategoryService(this.categoryDao);
+            CategoryError categoryError = categoryService.ThereAreCategories();
+
+            if (categoryError.HasError)
+            {
+                Response.Redirect("~/Categories/Errors/ThereAreNotCategoriesError.aspx");
+            }
+
             if (!this.IsPostBack)
             {
                 this.BindGrid();
@@ -44,14 +52,7 @@ namespace Biblioseca.Web.Categories
         protected void GridViewCategories_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int categoryId = Convert.ToInt32(this.GridViewCategories.DataKeys[e.RowIndex]?.Values?[0]);
-            Category category = this.categoryDao.Get(categoryId);
-            Ensure.NotNull(category, "La categoría no existe. ");
-
-            category.MarkAsDeleted();
-            this.categoryDao.Save(category);
-
-            this.BindGrid();
-            this.PageReload();
+            Response.Redirect(string.Format("~/Categories/SureToDelete.aspx?id={0}", categoryId));
         }
     }
 }

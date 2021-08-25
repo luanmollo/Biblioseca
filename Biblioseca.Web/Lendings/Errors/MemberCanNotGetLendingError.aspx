@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Sorry" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MemberCanNotGetLendingError.aspx.cs" Inherits="Biblioseca.Web.Lendings.MemberCanNotGetLendingError" %>
+﻿<%@ Page Title="Sorry" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MemberCanNotGetLendingError.aspx.cs" Inherits="Biblioseca.Web.Lendings.Errors.MemberCanNotGetLendingError" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Lendings</h2>

@@ -5,9 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Biblioseca.Web.Lendings
+namespace Biblioseca.Web.Lendings.Errors
 {
-    public partial class MemberCanNotGetLendingError : System.Web.UI.Page
+    public partial class MemberCanNotGetLendingError : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {

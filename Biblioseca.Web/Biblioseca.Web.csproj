@@ -120,13 +120,19 @@
   <ItemGroup>
     <Content Include="Authors\Create.aspx" />
     <Content Include="Authors\Edit.aspx" />
+    <Content Include="Authors\Errors\ThereAreNotAuthorsError.aspx" />
     <Content Include="Authors\Index.aspx" />
+    <Content Include="Authors\SureToDelete.aspx" />
     <Content Include="Books\Create.aspx" />
     <Content Include="Books\Edit.aspx" />
+    <Content Include="Books\Errors\ThereAreNotBooksError.aspx" />
     <Content Include="Books\Index.aspx" />
+    <Content Include="Books\SureToDelete.aspx" />
     <Content Include="Categories\Create.aspx" />
     <Content Include="Categories\Edit.aspx" />
+    <Content Include="Categories\Errors\ThereAreNotCategoriesError.aspx" />
     <Content Include="Categories\Index.aspx" />
+    <Content Include="Categories\SureToDelete.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -147,13 +153,17 @@
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Lendings\Create.aspx" />
     <Content Include="Lendings\Edit.aspx" />
+    <Content Include="Lendings\Errors\LendingDoesNotExistOrHasBeenAlreadyReturnedError.aspx" />
     <Content Include="Lendings\Index.aspx" />
     <Content Include="Lendings\Errors\MemberCanNotGetLendingError.aspx" />
     <Content Include="Lendings\Return.aspx" />
     <Content Include="Lendings\Errors\ThereAreNotLendingsError.aspx" />
+    <Content Include="Lendings\SureToDelete.aspx" />
     <Content Include="Members\Create.aspx" />
     <Content Include="Members\Edit.aspx" />
+    <Content Include="Members\Errors\ThereAreNotMembersError.aspx" />
     <Content Include="Members\Index.aspx" />
+    <Content Include="Members\SureToDelete.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -205,12 +215,26 @@
     <Compile Include="Authors\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Authors\Errors\ThereAreNotAuthorsError.aspx.cs">
+      <DependentUpon>ThereAreNotAuthorsError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Authors\Errors\ThereAreNotAuthorsError.aspx.designer.cs">
+      <DependentUpon>ThereAreNotAuthorsError.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Authors\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Authors\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Authors\SureToDelete.aspx.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Authors\SureToDelete.aspx.designer.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
     </Compile>
     <Compile Include="BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -229,12 +253,26 @@
     <Compile Include="Books\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Books\Errors\ThereAreNotBooksError.aspx.cs">
+      <DependentUpon>ThereAreNotBooksError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Books\Errors\ThereAreNotBooksError.aspx.designer.cs">
+      <DependentUpon>ThereAreNotBooksError.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Books\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Books\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Books\SureToDelete.aspx.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Books\SureToDelete.aspx.designer.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
     </Compile>
     <Compile Include="Categories\Create.aspx.cs">
       <DependentUpon>Create.aspx</DependentUpon>
@@ -250,12 +288,26 @@
     <Compile Include="Categories\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Categories\Errors\ThereAreNotCategoriesError.aspx.cs">
+      <DependentUpon>ThereAreNotCategoriesError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Categories\Errors\ThereAreNotCategoriesError.aspx.designer.cs">
+      <DependentUpon>ThereAreNotCategoriesError.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Categories\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Categories\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Categories\SureToDelete.aspx.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Categories\SureToDelete.aspx.designer.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -280,6 +332,13 @@
     </Compile>
     <Compile Include="Lendings\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Lendings\Errors\LendingDoesNotExistOrHasBeenAlreadyReturnedError.aspx.cs">
+      <DependentUpon>LendingDoesNotExistOrHasBeenAlreadyReturnedError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lendings\Errors\LendingDoesNotExistOrHasBeenAlreadyReturnedError.aspx.designer.cs">
+      <DependentUpon>LendingDoesNotExistOrHasBeenAlreadyReturnedError.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lendings\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
@@ -309,6 +368,13 @@
     <Compile Include="Lendings\Errors\ThereAreNotLendingsError.aspx.designer.cs">
       <DependentUpon>ThereAreNotLendingsError.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Lendings\SureToDelete.aspx.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lendings\SureToDelete.aspx.designer.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Members\Create.aspx.cs">
       <DependentUpon>Create.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -323,12 +389,26 @@
     <Compile Include="Members\Edit.aspx.designer.cs">
       <DependentUpon>Edit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Members\Errors\ThereAreNotMembersError.aspx.cs">
+      <DependentUpon>ThereAreNotMembersError.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Members\Errors\ThereAreNotMembersError.aspx.designer.cs">
+      <DependentUpon>ThereAreNotMembersError.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Members\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Members\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Members\SureToDelete.aspx.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Members\SureToDelete.aspx.designer.cs">
+      <DependentUpon>SureToDelete.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">

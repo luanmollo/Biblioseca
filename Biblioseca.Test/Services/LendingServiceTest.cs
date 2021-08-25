@@ -263,6 +263,21 @@ namespace Biblioseca.Test.Services
 
         }
 
+        [Test]
+        public void LendingExist()
+        {
+            int bookId = 1;
+            int memberId = 2;
+
+            this.lendingDao.Setup(x => x.GetByFilter(It.IsAny<LendingFilterDto>())).Returns(new List<Lending>());
+            this.lendingService = new LendingService(this.lendingDao.Object, this.bookDao.Object, this.memberDao.Object);
+
+            LendingError lendingError = this.lendingService.LendingExist(bookId, memberId);
+
+            Assert.IsTrue(lendingError.HasError);
+
+        }
+
 
         private static IEnumerable<Lending> GetLendings()
         {

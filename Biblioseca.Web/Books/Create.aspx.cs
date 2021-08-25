@@ -36,10 +36,9 @@ namespace Biblioseca.Web.Books
             CategoryService categoryService = new CategoryService(this.categoryDao);
             IEnumerable<Category> categories = categoryService.List();
 
-            this.categoryList.DataTextField = "value";
-            this.categoryList.DataValueField = "key";
-            this.categoryList.DataSource = categories
-                .ToDictionary(category => category.Id, category => $"{category.Name}");
+            this.categoryList.DataValueField = nameof(Category.Id);
+            this.categoryList.DataTextField = nameof(Category.Name);
+            this.categoryList.DataSource = categoryService.List();
             this.categoryList.DataBind();
         }
 
@@ -48,14 +47,13 @@ namespace Biblioseca.Web.Books
             AuthorService authorService = new AuthorService(this.authorDao);
             IEnumerable<Author> authors = authorService.List();
 
-            this.authorList.DataTextField = "value";
-            this.authorList.DataValueField = "key";
-            this.authorList.DataSource = authors
-                .ToDictionary(author => author.Id, author => $"{author.FirstName} {author.LastName}");
+            this.authorList.DataValueField = nameof(Author.Id);
+            this.authorList.DataTextField = nameof(Author.FullName);
+            this.authorList.DataSource = authorService.List();
             this.authorList.DataBind();
         }
 
-        protected void ButtonCreateAuthor_Click(object sender, EventArgs e)
+        protected void ButtonCreateBook_Click(object sender, EventArgs e)
         {
             BookService bookService = new BookService(this.bookDao);
 

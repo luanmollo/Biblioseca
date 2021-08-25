@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Biblioseca.Web.Lendings
+namespace Biblioseca.Web.Lendings.Errors
 {
     public partial class ThereAreNotLendingsError : BasePage
     {

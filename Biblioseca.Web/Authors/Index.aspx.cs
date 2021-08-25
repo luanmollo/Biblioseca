@@ -16,6 +16,14 @@ namespace Biblioseca.Web.Authors
         private readonly AuthorDao authorDao = new AuthorDao(Global.SessionFactory);
         protected void Page_Load(object sender, EventArgs e)
         {
+            AuthorService authorService = new AuthorService(this.authorDao);
+            AuthorError authorError = authorService.ThereAreAuthors();
+
+            if (authorError.HasError)
+            {
+                Response.Redirect("~/Authors/Errors/ThereAreNotAuthorsError.aspx");
+            }
+
             if (!this.IsPostBack)
             {
                 this.BindGrid();
@@ -44,15 +52,7 @@ namespace Biblioseca.Web.Authors
         protected void GridViewAuthors_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int authorId = Convert.ToInt32(this.GridViewAuthors.DataKeys[e.RowIndex]?.Values?[0]);
-            Author author = this.authorDao.Get(authorId);
-            Ensure.NotNull(author, "El autor no existe. ");
-
-            //tuve que hacer author.markasdeleted y luego el save porque no pude configurar el metodo delete() de la clase dao
-            author.MarkAsDeleted();
-            this.authorDao.Save(author);
-
-            this.BindGrid();
-            this.PageReload();
+            Response.Redirect(string.Format("~/Authors/SureToDelete.aspx?id={0}", authorId));
         }
     }
 }

@@ -74,5 +74,20 @@ namespace Biblioseca.Test.DataAccess
 
             Assert.IsTrue(lendings.Any());
         }
+
+        [Test]
+        public void GetActualLendings()
+        {
+            LendingDao lendingDao = new LendingDao(this.sessionFactory);
+
+            LendingFilterDto lendingFilterDto = new LendingFilterDto
+            {
+                Returned = false
+            };
+
+            IEnumerable<Lending> lendings = lendingDao.GetByFilter(lendingFilterDto);
+
+            Assert.IsTrue(lendings.Any());
+        }
     }
 }

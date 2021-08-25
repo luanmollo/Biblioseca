@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Biblioseca.Web.Lendings
+namespace Biblioseca.Web.Lendings.Errors
 {
 
 

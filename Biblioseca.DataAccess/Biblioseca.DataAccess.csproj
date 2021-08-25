@@ -60,7 +60,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authors\AuthorDao.cs" />
+    <Compile Include="Authors\AuthorError.cs" />
     <Compile Include="BaseError.cs" />
+    <Compile Include="Books\BookError.cs" />
+    <Compile Include="Categories\CategoryError.cs" />
     <Compile Include="Filters\AuthorFilterDto.cs" />
     <Compile Include="Authors\IAuthorDao.cs" />
     <Compile Include="Books\BookDao.cs" />
@@ -79,6 +82,7 @@
     <Compile Include="Lendings\LendingError.cs" />
     <Compile Include="Members\IMemberDao.cs" />
     <Compile Include="Members\MemberDao.cs" />
+    <Compile Include="Members\MemberError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

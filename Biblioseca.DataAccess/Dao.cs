@@ -23,8 +23,6 @@ namespace Biblioseca.DataAccess
         {
             this.Session
                 .SaveOrUpdate(entity);
-            //this.Session.Flush();
-            //si no hacia session.flush los cambios no se guardaban en la bd. está bien?
         }
 
         public virtual T Get(int id)

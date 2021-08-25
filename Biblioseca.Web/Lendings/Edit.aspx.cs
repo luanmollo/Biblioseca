@@ -78,8 +78,15 @@ namespace Biblioseca.Web.Lendings
             LendingService lendingService = new LendingService(this.lendingDao, this.bookDao, this.memberDao);
             Lending lending = lendingService.Get(this.lendingId);
 
-            lending.Book = bookService.Get(Convert.ToInt32(this.bookList.SelectedValue));
-            lending.Member = memberService.Get(Convert.ToInt32(this.memberList.SelectedValue));
+            LendingError lendingError = lendingService.CanGetLending(member.Id);
+            
+            if (lendingError.HasError)
+            {
+                Response.Redirect("~/Lendings/Errors/MemberCanNotGetLendingError.aspx");
+            }
+
+            lending.Book = book;
+            lending.Member = member;
 
             //solamente se puede cambiar el libro y el socio, no se puede cambiar la fecha de prestamo
             lendingDao.Save(lending);

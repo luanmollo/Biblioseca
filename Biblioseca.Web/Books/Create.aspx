@@ -57,7 +57,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-10">
-                <asp:Button ID="buttonCreateBook" runat="server" Text="Crear" OnClick="ButtonCreateAuthor_Click" CssClass="btn btn-default"/>
+                <asp:Button ID="buttonCreateBook" runat="server" Text="Crear" OnClick="ButtonCreateBook_Click" CssClass="btn btn-default"/>
             </div>
         </div>
     </div>

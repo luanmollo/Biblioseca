@@ -56,7 +56,6 @@ namespace Biblioseca.Web.Books
         private void BindBook()
         {
             BookService bookService = new BookService(this.bookDao);
-            //no trae el libro ARREGLAR
             Book book = bookService.Get(this.bookId);
             Ensure.NotNull(book, "El libro no existe. ");
 
@@ -73,7 +72,6 @@ namespace Biblioseca.Web.Books
         protected void ButtonEditBook_Click(object sender, EventArgs e)
         {
             BookService bookService = new BookService(this.bookDao);
-            //no trae el libro ARREGLAR
             Book book = bookService.Get(this.bookId);
             Ensure.NotNull(book, "El libro no existe. ");
 

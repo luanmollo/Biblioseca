@@ -18,6 +18,9 @@
 		<property name="ReturnDate">
 			<column name="ReturnDate" sql-type="datetime2" not-null="false"/>
 		</property>
+		<property name="Returned">
+			<column name="Returned" sql-type="bit" not-null="true" />
+		</property>
 		<property name="Deleted">
 			<column name="Deleted" sql-type="bit" not-null="true" />
 		</property>

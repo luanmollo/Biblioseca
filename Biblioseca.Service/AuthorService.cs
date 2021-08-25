@@ -31,6 +31,18 @@ namespace Biblioseca.Service
             return authors;
         }
 
+        public AuthorError ThereAreAuthors()
+        {
+            IEnumerable<Author> authors = this.authorDao.GetAll();
+
+            AuthorError authorError = new AuthorError
+            {
+                HasError = !authors.Any()
+            };
+
+            return authorError;
+        }
+
 
     }
 }

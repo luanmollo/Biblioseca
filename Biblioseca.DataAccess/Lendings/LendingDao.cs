@@ -29,7 +29,11 @@ namespace Biblioseca.DataAccess.Lendings
                     .Add(Restrictions.Eq("Id", lendingFilterDto.BookId));
             }
 
-            criteria.Add(Restrictions.Eq("ReturnDate", lendingFilterDto.ReturnDate));
+            //tuve que crear un flag para poder filtrarlo porque por datetime no podia filtrarlo bien
+            if(lendingFilterDto.Returned != null)
+            {
+                criteria.Add(Restrictions.Eq("Returned", lendingFilterDto.Returned));
+            }
 
             criteria.Add(Restrictions.Eq("Deleted", false));
 

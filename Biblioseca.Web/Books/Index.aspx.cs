@@ -16,6 +16,14 @@ namespace Biblioseca.Web.Books
         private readonly BookDao bookDao = new BookDao(Global.SessionFactory);
         protected void Page_Load(object sender, EventArgs e)
         {
+            BookService bookService = new BookService(this.bookDao);
+            BookError bookError = bookService.ThereAreBooks();
+
+            if (bookError.HasError)
+            {
+                Response.Redirect("~/Books/Errors/ThereAreNotBooksError.aspx");
+            }
+
             if (!this.IsPostBack)
             {
                 this.BindGrid();
@@ -38,20 +46,13 @@ namespace Biblioseca.Web.Books
         protected void GridViewBooks_RowEditing(object sender, GridViewEditEventArgs e)
         {
             int authorId = Convert.ToInt32(this.GridViewBooks.DataKeys[e.NewEditIndex].Values[0]);
-            Response.Redirect(string.Format("~/Books/Edit.aspx", authorId));
+            Response.Redirect(string.Format("~/Books/Edit.aspx?id={0}", authorId));
         }
 
         protected void GridViewBooks_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int bookId = Convert.ToInt32(this.GridViewBooks.DataKeys[e.RowIndex].Values[0]);
-            Book book = this.bookDao.Get(bookId);
-            Ensure.NotNull(book, "Libro no existe. ");
-
-            book.MarkAsDeleted();
-            this.bookDao.Save(book);
-
-            this.BindGrid();
-            this.PageReload();
+            Response.Redirect(string.Format("~/Books/SureToDelete.aspx?id={0}", bookId));
         }
     }
 }
