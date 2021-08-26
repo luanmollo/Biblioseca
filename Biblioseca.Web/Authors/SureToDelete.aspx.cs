@@ -17,6 +17,7 @@ namespace Biblioseca.Web.Authors
         protected void Page_Load(object sender, EventArgs e)
         {
             this.authorId = Convert.ToInt32(Request.QueryString.Get("id"));
+            this.title.InnerText = "¿Seguro de que querés eliminar el autor " + this.authorDao.Get(authorId).FullName + "?";
         }
 
         protected void LinkDeleteAuthor_OnClick(object sender, EventArgs e)

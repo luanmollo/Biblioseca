@@ -17,6 +17,7 @@ namespace Biblioseca.Web.Categories
         protected void Page_Load(object sender, EventArgs e)
         {
             this.categoryId = Convert.ToInt32(Request.QueryString.Get("id"));
+            this.title.InnerText = "¿Seguro de que querés eliminar la categoría " + this.categoryDao.Get(categoryId).Name + "?";
         }
 
         protected void LinkDeleteCategory_OnClick(object sender, EventArgs e)

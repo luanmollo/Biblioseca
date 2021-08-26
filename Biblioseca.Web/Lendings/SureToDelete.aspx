@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <h2>Lendings</h2>
-<h4>¿Seguro de que querés eliminar el préstamo?</h4>
+<h4 runat="server" id="title"></h4>
 
 <asp:LinkButton runat="server" ID="linkDeleteLending" Text="Si, eliminar" OnClick="LinkDeleteLending_OnClick"
                     CausesValidation="false" CssClass="btn btn-primary"/>

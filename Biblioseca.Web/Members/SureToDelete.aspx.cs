@@ -17,6 +17,7 @@ namespace Biblioseca.Web.Members
         protected void Page_Load(object sender, EventArgs e)
         {
             this.memberId = Convert.ToInt32(Request.QueryString.Get("id"));
+            this.title.InnerText = "¿Seguro de que querés eliminar el socio " + this.memberDao.Get(memberId).FullName + "?";
         }
 
         protected void LinkDeleteMember_OnClick(object sender, EventArgs e)

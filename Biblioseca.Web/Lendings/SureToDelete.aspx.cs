@@ -17,6 +17,7 @@ namespace Biblioseca.Web.Lendings
         protected void Page_Load(object sender, EventArgs e)
         {
             this.lendingId = Convert.ToInt32(Request.QueryString.Get("id"));
+            this.title.InnerText = "¿Seguro de que querés eliminar el préstamo del libro '" + this.lendingDao.Get(lendingId).Book.Title + "' prestado a " + this.lendingDao.Get(lendingId).Member.FullName + "?";
         }
 
         protected void LinkDeleteLending_OnClick(object sender, EventArgs e)

@@ -17,6 +17,7 @@ namespace Biblioseca.Web.Books
         protected void Page_Load(object sender, EventArgs e)
         {
             this.bookId = Convert.ToInt32(Request.QueryString.Get("id"));
+            this.title.InnerText = "¿Seguro de que querés eliminar el libro '" + this.bookDao.Get(bookId).Title + "'?";
 
         }
 

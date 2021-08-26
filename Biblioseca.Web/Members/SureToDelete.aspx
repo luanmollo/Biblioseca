@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <h2>Members</h2>
-<h4>¿Seguro de que querés eliminar el socio?</h4>
+<h4 runat="server" id="title"></h4>
 
 <asp:LinkButton runat="server" ID="linkDeleteMember" Text="Si, eliminar" OnClick="LinkDeleteMember_OnClick"
                     CausesValidation="false" CssClass="btn btn-primary"/>

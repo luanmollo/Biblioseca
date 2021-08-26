@@ -2,7 +2,7 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <h2>Categories</h2>
-<h4>¿Seguro de que querés eliminar la categoría?</h4>
+<h4 runat="server" id="title"></h4>
 
 <asp:LinkButton runat="server" ID="linkDeleteCategory" Text="Si, eliminar" OnClick="LinkDeleteCategory_OnClick"
                     CausesValidation="false" CssClass="btn btn-primary"/>
