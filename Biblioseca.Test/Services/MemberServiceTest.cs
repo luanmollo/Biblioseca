@@ -65,6 +65,18 @@ namespace Biblioseca.Test.Services
                 "No hay socios para listar. ");
         }
 
+        [Test]
+        public void ThereAreMembers()
+        {
+            this.memberDao.Setup(x => x.GetAll()).Returns(new List<Member>());
+
+            this.memberService = new MemberService(this.memberDao.Object);
+
+            MemberError memberError = this.memberService.ThereAreMembers();
+
+            Assert.IsTrue(memberError.HasError);
+        }
+
         private static IEnumerable<Member> GetMembers()
         {
             List<Member> members = new List<Member>

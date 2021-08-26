@@ -77,6 +77,18 @@ namespace Biblioseca.Test.Services
                 "No hay categorías para listar. ");
         }
 
+        [Test]
+        public void ThereAreCategories()
+        {
+            this.categoryDao.Setup(x => x.GetAll()).Returns(new List<Category>());
+
+            this.categoryService = new CategoryService(this.categoryDao.Object);
+
+            CategoryError categoryError = this.categoryService.ThereAreCategories();
+
+            Assert.IsTrue(categoryError.HasError);
+        }
+
         private static IEnumerable<Category> GetCategories()
         {
             List<Category> categories = new List<Category>

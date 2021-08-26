@@ -69,6 +69,18 @@ namespace Biblioseca.Test.Services
                 "No hay autores para listar. ");
         }
 
+        [Test]
+        public void ThereAreAuthors()
+        {
+            this.authorDao.Setup(x => x.GetAll()).Returns(new List<Author>());
+
+            this.authorService = new AuthorService(this.authorDao.Object);
+
+            AuthorError authorError = this.authorService.ThereAreAuthors();
+
+            Assert.IsTrue(authorError.HasError);
+        }
+
         private static IEnumerable<Author> GetAuthors()
         {
             List<Author> authors = new List<Author>

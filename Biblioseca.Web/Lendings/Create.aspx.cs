@@ -71,7 +71,7 @@ namespace Biblioseca.Web.Lendings
 
             lendingDao.Save(lending);
 
-            Response.Redirect("~/Lendings/Index.aspx");
+            Response.Redirect("~/Lendings/Congrats.aspx");
         }
 
         protected void ButtonBackToLendings_Click(object sender, EventArgs e)

@@ -151,6 +151,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Lendings\Congrats.aspx" />
     <Content Include="Lendings\Create.aspx" />
     <Content Include="Lendings\Edit.aspx" />
     <Content Include="Lendings\Errors\LendingDoesNotExistOrHasBeenAlreadyReturnedError.aspx" />
@@ -318,6 +319,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Lendings\Congrats.aspx.cs">
+      <DependentUpon>Congrats.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Lendings\Congrats.aspx.designer.cs">
+      <DependentUpon>Congrats.aspx</DependentUpon>
     </Compile>
     <Compile Include="Lendings\Create.aspx.cs">
       <DependentUpon>Create.aspx</DependentUpon>

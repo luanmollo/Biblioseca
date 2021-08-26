@@ -144,6 +144,18 @@ namespace Biblioseca.Test.Services
 
         }
 
+        [Test]
+        public void ThereAreBooks()
+        {
+            this.bookDao.Setup(x => x.GetAll()).Returns(new List<Book>());
+
+            this.bookService = new BookService(this.bookDao.Object);
+
+            BookError bookError = this.bookService.ThereAreBooks();
+
+            Assert.IsTrue(bookError.HasError);
+        }
+
         private static IEnumerable<Book> GetBooks()
         {
             List<Book> books = new List<Book>
